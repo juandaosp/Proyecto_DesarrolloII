@@ -1,4 +1,4 @@
-﻿DROP TABLE empleado CASCADE;
+DROP TABLE empleado CASCADE;
 DROP TABLE bus CASCADE;
 DROP TABLE ruta CASCADE;
 DROP TABLE programacion CASCADE;
@@ -29,7 +29,7 @@ CREATE TABLE bus
 (
 matricula VARCHAR(30) PRIMARY KEY,
 estado VARCHAR(30) NOT NULL,
-año VARCHAR(10) NOT NULL,
+a�o VARCHAR(10) NOT NULL,
 fabricante VARCHAR(40) NOT NULL,
 capacidad VARCHAR(30) NOT NULL,
 cilindrinaje VARCHAR(40) NOT NULL,
@@ -46,10 +46,10 @@ estado VARCHAR(40) NOT NULL
 
 CREATE TABLE programacion
 (
-hora_inicio VARCHAR(10) NOT NULL,
-hora_fin VARCHAR(10) NOT NULL,
-fecha DATE NOT NULL, 
-id_empleado VARCHAR(50)
+
+fecha TIMESTAMP NOT NULL, 
+id_empleado VARCHAR(50),
+PRIMARY KEY(id_empleado, )
 );
 
 CREATE TABLE estacion
