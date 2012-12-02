@@ -1,9 +1,6 @@
 package GUI;
 
-import DAO.DAOOperador;
-import DAO.DAOOperadorMovilLocal;
-import Logica.Operador;
-import Logica.OperadorMovilLocal;
+
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -73,7 +70,7 @@ public class RegistroMovilLocal extends JFrame implements ActionListener
 		panelB.add(btLimpiar);
 		panelB.add(btCancelar);  
 
-		ImageIcon imLogo  = new ImageIcon("Imagenes/smalllogo.png");		
+		ImageIcon imLogo  = new ImageIcon("smalllogo.png");		
 		JLabel lbLogo = new JLabel(imLogo);		
 
 		setLayout(new BorderLayout(5,5));
@@ -99,38 +96,12 @@ public class RegistroMovilLocal extends JFrame implements ActionListener
 			costoMin = campoCostoMin.getText(); 
 			CostoKB = campoCostoKB.getText(); 
 
-			Operador op= new Operador();
-
-			op.setNomOperador(nombre);
-			op.setPais(pais);
-
-			DAOOperador daooperador = new DAOOperador();
-			daooperador.GuardarOperador(op);
-
-			OperadorMovilLocal oml = new OperadorMovilLocal();
-
-			oml.setNomOperador(nombre);
-			oml.setPais(pais);oml.setCostoKb(Integer.parseInt(CostoKB));
-			oml.setCostoMinuto(Integer.parseInt(costoMin));
-			oml.setCostoSms(Integer.parseInt(costoSMS));
-			oml.setCostoKb(Integer.parseInt(CostoKB));
-
-			DAOOperadorMovilLocal DAOoml = new DAOOperadorMovilLocal();
-
-			int resultado = DAOoml.guardarOML(oml);
+		
 			
-			if(ventanaP.isMostrandoTabla() == true && resultado > 0)
-			{
-				JOptionPane.showMessageDialog(null, "El operador ha sido agregado correctamente");
-				ventanaP.removerContenidoVentana();
-				ventanaP.mostrarTabla("mlocal");
 
-			}
-			if(ventanaP.isMostrandoTabla() == false && resultado > 0)
-				JOptionPane.showMessageDialog(null, "El operador ha sido agregado correctamente");
-			if(resultado <= 0)
-				JOptionPane.showMessageDialog(null, "Error al registrar operador","ERROR", JOptionPane.ERROR_MESSAGE);	
-
+			
+			
+			
 			campoNombre.setText(""); 
 			campoCostoSMS.setText("");
 			campoCostoMin.setText(""); 
