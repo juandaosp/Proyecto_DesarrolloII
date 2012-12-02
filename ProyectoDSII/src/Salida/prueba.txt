@@ -1,0 +1,29 @@
+Puntos escogidos : (-50,-9)-(2,15)
+
+Parada mas cercana al origen: 36
+Parada mas cercana al destino: 30
+Itinerario: 1
+Tipo de rutaDirecta
+36#PenalizFrecuencia-T47A-SN#36
+36#T47A-SN#35
+35#T47A-SN#34
+34#T47A-SN#33
+33#T47A-SN#32
+32#T47A-SN#31
+31#T47A-SN#30
+Tiempo recorrido: 23
+
+Itinerario: 2
+Tipo de rutaDirecta
+36#PenalizFrecuencia-T47B-SN#36
+36#T47B-SN#35
+35#T47B-SN#34
+34#T47B-SN#33
+33#T47B-SN#32
+32#T47B-SN#31
+31#T47B-SN#30
+Tiempo recorrido: 22
+
+Mejor itinerario: 2 Tiempo 22
+
+
