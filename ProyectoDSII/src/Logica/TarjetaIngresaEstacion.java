@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Dash
+ * @author Usuario
  */
 @Entity
 @Table(name = "tarjeta_ingresa_estacion")
@@ -62,7 +62,7 @@ public class TarjetaIngresaEstacion implements Serializable {
         this.fecha = fecha;
     }
 
-    public TarjetaIngresaEstacion(String nombreEstacion, String ubicacionEstacion, int pinTarjeta) {
+    public TarjetaIngresaEstacion(String nombreEstacion, String ubicacionEstacion, String pinTarjeta) {
         this.tarjetaIngresaEstacionPK = new TarjetaIngresaEstacionPK(nombreEstacion, ubicacionEstacion, pinTarjeta);
     }
 

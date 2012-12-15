@@ -22,7 +22,7 @@ import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author Dash
+ * @author Usuario
  */
 public class ProgramacionJpaController implements Serializable {
 
@@ -39,9 +39,9 @@ public class ProgramacionJpaController implements Serializable {
         if (programacion.getProgramacionPK() == null) {
             programacion.setProgramacionPK(new ProgramacionPK());
         }
+        programacion.getProgramacionPK().setMatriculaBus(programacion.getBus().getMatricula());
         programacion.getProgramacionPK().setNombreRuta(programacion.getRuta().getNombreRuta());
         programacion.getProgramacionPK().setIdEmpleado(programacion.getEmpleado().getId());
-        programacion.getProgramacionPK().setMatriculaBus(programacion.getBus().getMatricula());
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -63,15 +63,15 @@ public class ProgramacionJpaController implements Serializable {
             }
             em.persist(programacion);
             if (ruta != null) {
-                ruta.getProgramacionCollection().add(programacion);
+                ruta.getProgramacionList().add(programacion);
                 ruta = em.merge(ruta);
             }
             if (empleado != null) {
-                empleado.getProgramacionCollection().add(programacion);
+                empleado.getProgramacionList().add(programacion);
                 empleado = em.merge(empleado);
             }
             if (bus != null) {
-                bus.getProgramacionCollection().add(programacion);
+                bus.getProgramacionList().add(programacion);
                 bus = em.merge(bus);
             }
             em.getTransaction().commit();
@@ -88,9 +88,9 @@ public class ProgramacionJpaController implements Serializable {
     }
 
     public void edit(Programacion programacion) throws NonexistentEntityException, Exception {
+        programacion.getProgramacionPK().setMatriculaBus(programacion.getBus().getMatricula());
         programacion.getProgramacionPK().setNombreRuta(programacion.getRuta().getNombreRuta());
         programacion.getProgramacionPK().setIdEmpleado(programacion.getEmpleado().getId());
-        programacion.getProgramacionPK().setMatriculaBus(programacion.getBus().getMatricula());
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -116,27 +116,27 @@ public class ProgramacionJpaController implements Serializable {
             }
             programacion = em.merge(programacion);
             if (rutaOld != null && !rutaOld.equals(rutaNew)) {
-                rutaOld.getProgramacionCollection().remove(programacion);
+                rutaOld.getProgramacionList().remove(programacion);
                 rutaOld = em.merge(rutaOld);
             }
             if (rutaNew != null && !rutaNew.equals(rutaOld)) {
-                rutaNew.getProgramacionCollection().add(programacion);
+                rutaNew.getProgramacionList().add(programacion);
                 rutaNew = em.merge(rutaNew);
             }
             if (empleadoOld != null && !empleadoOld.equals(empleadoNew)) {
-                empleadoOld.getProgramacionCollection().remove(programacion);
+                empleadoOld.getProgramacionList().remove(programacion);
                 empleadoOld = em.merge(empleadoOld);
             }
             if (empleadoNew != null && !empleadoNew.equals(empleadoOld)) {
-                empleadoNew.getProgramacionCollection().add(programacion);
+                empleadoNew.getProgramacionList().add(programacion);
                 empleadoNew = em.merge(empleadoNew);
             }
             if (busOld != null && !busOld.equals(busNew)) {
-                busOld.getProgramacionCollection().remove(programacion);
+                busOld.getProgramacionList().remove(programacion);
                 busOld = em.merge(busOld);
             }
             if (busNew != null && !busNew.equals(busOld)) {
-                busNew.getProgramacionCollection().add(programacion);
+                busNew.getProgramacionList().add(programacion);
                 busNew = em.merge(busNew);
             }
             em.getTransaction().commit();
@@ -170,17 +170,17 @@ public class ProgramacionJpaController implements Serializable {
             }
             Ruta ruta = programacion.getRuta();
             if (ruta != null) {
-                ruta.getProgramacionCollection().remove(programacion);
+                ruta.getProgramacionList().remove(programacion);
                 ruta = em.merge(ruta);
             }
             Empleado empleado = programacion.getEmpleado();
             if (empleado != null) {
-                empleado.getProgramacionCollection().remove(programacion);
+                empleado.getProgramacionList().remove(programacion);
                 empleado = em.merge(empleado);
             }
             Bus bus = programacion.getBus();
             if (bus != null) {
-                bus.getProgramacionCollection().remove(programacion);
+                bus.getProgramacionList().remove(programacion);
                 bus = em.merge(bus);
             }
             em.remove(programacion);

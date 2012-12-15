@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Dash
+ * @author Usuario
  */
 @Entity
 @Table(name = "recarga")
@@ -36,7 +36,7 @@ public class Recarga implements Serializable {
     @Id
     @Basic(optional = false)
     @Column(name = "pin_tarjeta")
-    private Integer pinTarjeta;
+    private String pinTarjeta;
     @Basic(optional = false)
     @Column(name = "fecha_recarga")
     @Temporal(TemporalType.DATE)
@@ -50,20 +50,20 @@ public class Recarga implements Serializable {
     public Recarga() {
     }
 
-    public Recarga(Integer pinTarjeta) {
+    public Recarga(String pinTarjeta) {
         this.pinTarjeta = pinTarjeta;
     }
 
-    public Recarga(Integer pinTarjeta, Date fechaRecarga) {
+    public Recarga(String pinTarjeta, Date fechaRecarga) {
         this.pinTarjeta = pinTarjeta;
         this.fechaRecarga = fechaRecarga;
     }
 
-    public Integer getPinTarjeta() {
+    public String getPinTarjeta() {
         return pinTarjeta;
     }
 
-    public void setPinTarjeta(Integer pinTarjeta) {
+    public void setPinTarjeta(String pinTarjeta) {
         this.pinTarjeta = pinTarjeta;
     }
 

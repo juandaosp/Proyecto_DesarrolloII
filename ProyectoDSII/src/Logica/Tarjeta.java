@@ -5,8 +5,8 @@
 package Logica;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Dash
+ * @author Usuario
  */
 @Entity
 @Table(name = "tarjeta")
@@ -44,7 +44,7 @@ public class Tarjeta implements Serializable {
     @Id
     @Basic(optional = false)
     @Column(name = "pin")
-    private Integer pin;
+    private String pin;
     @Basic(optional = false)
     @Column(name = "costo")
     private int costo;
@@ -64,9 +64,9 @@ public class Tarjeta implements Serializable {
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "tarjeta")
     private Recarga recarga;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tarjeta")
-    private Collection<TarjetaIngresaEstacion> tarjetaIngresaEstacionCollection;
+    private List<TarjetaIngresaEstacion> tarjetaIngresaEstacionList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pinTarjeta")
-    private Collection<Usuario> usuarioCollection;
+    private List<Usuario> usuarioList;
     @JoinColumn(name = "nombre_estacion", referencedColumnName = "nombre_estacion")
     @ManyToOne(optional = false)
     private Estacion nombreEstacion;
@@ -74,11 +74,11 @@ public class Tarjeta implements Serializable {
     public Tarjeta() {
     }
 
-    public Tarjeta(Integer pin) {
+    public Tarjeta(String pin) {
         this.pin = pin;
     }
 
-    public Tarjeta(Integer pin, int costo, String tipo, String estado, int pasajes, Date fecha) {
+    public Tarjeta(String pin, int costo, String tipo, String estado, int pasajes, Date fecha) {
         this.pin = pin;
         this.costo = costo;
         this.tipo = tipo;
@@ -87,11 +87,11 @@ public class Tarjeta implements Serializable {
         this.fecha = fecha;
     }
 
-    public Integer getPin() {
+    public String getPin() {
         return pin;
     }
 
-    public void setPin(Integer pin) {
+    public void setPin(String pin) {
         this.pin = pin;
     }
 
@@ -144,21 +144,21 @@ public class Tarjeta implements Serializable {
     }
 
     @XmlTransient
-    public Collection<TarjetaIngresaEstacion> getTarjetaIngresaEstacionCollection() {
-        return tarjetaIngresaEstacionCollection;
+    public List<TarjetaIngresaEstacion> getTarjetaIngresaEstacionList() {
+        return tarjetaIngresaEstacionList;
     }
 
-    public void setTarjetaIngresaEstacionCollection(Collection<TarjetaIngresaEstacion> tarjetaIngresaEstacionCollection) {
-        this.tarjetaIngresaEstacionCollection = tarjetaIngresaEstacionCollection;
+    public void setTarjetaIngresaEstacionList(List<TarjetaIngresaEstacion> tarjetaIngresaEstacionList) {
+        this.tarjetaIngresaEstacionList = tarjetaIngresaEstacionList;
     }
 
     @XmlTransient
-    public Collection<Usuario> getUsuarioCollection() {
-        return usuarioCollection;
+    public List<Usuario> getUsuarioList() {
+        return usuarioList;
     }
 
-    public void setUsuarioCollection(Collection<Usuario> usuarioCollection) {
-        this.usuarioCollection = usuarioCollection;
+    public void setUsuarioList(List<Usuario> usuarioList) {
+        this.usuarioList = usuarioList;
     }
 
     public Estacion getNombreEstacion() {

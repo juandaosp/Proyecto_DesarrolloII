@@ -23,7 +23,7 @@ import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author Dash
+ * @author Usuario
  */
 public class SolicitudJpaController implements Serializable {
 
@@ -67,11 +67,11 @@ public class SolicitudJpaController implements Serializable {
                 solucion = em.merge(solucion);
             }
             if (idUsuario != null) {
-                idUsuario.getSolicitudCollection().add(solicitud);
+                idUsuario.getSolicitudList().add(solicitud);
                 idUsuario = em.merge(idUsuario);
             }
             if (nombreEstacion != null) {
-                nombreEstacion.getSolicitudCollection().add(solicitud);
+                nombreEstacion.getSolicitudList().add(solicitud);
                 nombreEstacion = em.merge(nombreEstacion);
             }
             em.getTransaction().commit();
@@ -132,19 +132,19 @@ public class SolicitudJpaController implements Serializable {
                 solucionNew = em.merge(solucionNew);
             }
             if (idUsuarioOld != null && !idUsuarioOld.equals(idUsuarioNew)) {
-                idUsuarioOld.getSolicitudCollection().remove(solicitud);
+                idUsuarioOld.getSolicitudList().remove(solicitud);
                 idUsuarioOld = em.merge(idUsuarioOld);
             }
             if (idUsuarioNew != null && !idUsuarioNew.equals(idUsuarioOld)) {
-                idUsuarioNew.getSolicitudCollection().add(solicitud);
+                idUsuarioNew.getSolicitudList().add(solicitud);
                 idUsuarioNew = em.merge(idUsuarioNew);
             }
             if (nombreEstacionOld != null && !nombreEstacionOld.equals(nombreEstacionNew)) {
-                nombreEstacionOld.getSolicitudCollection().remove(solicitud);
+                nombreEstacionOld.getSolicitudList().remove(solicitud);
                 nombreEstacionOld = em.merge(nombreEstacionOld);
             }
             if (nombreEstacionNew != null && !nombreEstacionNew.equals(nombreEstacionOld)) {
-                nombreEstacionNew.getSolicitudCollection().add(solicitud);
+                nombreEstacionNew.getSolicitudList().add(solicitud);
                 nombreEstacionNew = em.merge(nombreEstacionNew);
             }
             em.getTransaction().commit();
@@ -189,12 +189,12 @@ public class SolicitudJpaController implements Serializable {
             }
             Usuario idUsuario = solicitud.getIdUsuario();
             if (idUsuario != null) {
-                idUsuario.getSolicitudCollection().remove(solicitud);
+                idUsuario.getSolicitudList().remove(solicitud);
                 idUsuario = em.merge(idUsuario);
             }
             Estacion nombreEstacion = solicitud.getNombreEstacion();
             if (nombreEstacion != null) {
-                nombreEstacion.getSolicitudCollection().remove(solicitud);
+                nombreEstacion.getSolicitudList().remove(solicitud);
                 nombreEstacion = em.merge(nombreEstacion);
             }
             em.remove(solicitud);

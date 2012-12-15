@@ -17,15 +17,14 @@ import Logica.Estacion;
 import Logica.Tarjeta;
 import Logica.TarjetaIngresaEstacion;
 import java.util.ArrayList;
-import java.util.Collection;
-import Logica.Usuario;
 import java.util.List;
+import Logica.Usuario;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author Dash
+ * @author Usuario
  */
 public class TarjetaJpaController implements Serializable {
 
@@ -39,11 +38,11 @@ public class TarjetaJpaController implements Serializable {
     }
 
     public void create(Tarjeta tarjeta) throws PreexistingEntityException, Exception {
-        if (tarjeta.getTarjetaIngresaEstacionCollection() == null) {
-            tarjeta.setTarjetaIngresaEstacionCollection(new ArrayList<TarjetaIngresaEstacion>());
+        if (tarjeta.getTarjetaIngresaEstacionList() == null) {
+            tarjeta.setTarjetaIngresaEstacionList(new ArrayList<TarjetaIngresaEstacion>());
         }
-        if (tarjeta.getUsuarioCollection() == null) {
-            tarjeta.setUsuarioCollection(new ArrayList<Usuario>());
+        if (tarjeta.getUsuarioList() == null) {
+            tarjeta.setUsuarioList(new ArrayList<Usuario>());
         }
         EntityManager em = null;
         try {
@@ -59,18 +58,18 @@ public class TarjetaJpaController implements Serializable {
                 nombreEstacion = em.getReference(nombreEstacion.getClass(), nombreEstacion.getNombreEstacion());
                 tarjeta.setNombreEstacion(nombreEstacion);
             }
-            Collection<TarjetaIngresaEstacion> attachedTarjetaIngresaEstacionCollection = new ArrayList<TarjetaIngresaEstacion>();
-            for (TarjetaIngresaEstacion tarjetaIngresaEstacionCollectionTarjetaIngresaEstacionToAttach : tarjeta.getTarjetaIngresaEstacionCollection()) {
-                tarjetaIngresaEstacionCollectionTarjetaIngresaEstacionToAttach = em.getReference(tarjetaIngresaEstacionCollectionTarjetaIngresaEstacionToAttach.getClass(), tarjetaIngresaEstacionCollectionTarjetaIngresaEstacionToAttach.getTarjetaIngresaEstacionPK());
-                attachedTarjetaIngresaEstacionCollection.add(tarjetaIngresaEstacionCollectionTarjetaIngresaEstacionToAttach);
+            List<TarjetaIngresaEstacion> attachedTarjetaIngresaEstacionList = new ArrayList<TarjetaIngresaEstacion>();
+            for (TarjetaIngresaEstacion tarjetaIngresaEstacionListTarjetaIngresaEstacionToAttach : tarjeta.getTarjetaIngresaEstacionList()) {
+                tarjetaIngresaEstacionListTarjetaIngresaEstacionToAttach = em.getReference(tarjetaIngresaEstacionListTarjetaIngresaEstacionToAttach.getClass(), tarjetaIngresaEstacionListTarjetaIngresaEstacionToAttach.getTarjetaIngresaEstacionPK());
+                attachedTarjetaIngresaEstacionList.add(tarjetaIngresaEstacionListTarjetaIngresaEstacionToAttach);
             }
-            tarjeta.setTarjetaIngresaEstacionCollection(attachedTarjetaIngresaEstacionCollection);
-            Collection<Usuario> attachedUsuarioCollection = new ArrayList<Usuario>();
-            for (Usuario usuarioCollectionUsuarioToAttach : tarjeta.getUsuarioCollection()) {
-                usuarioCollectionUsuarioToAttach = em.getReference(usuarioCollectionUsuarioToAttach.getClass(), usuarioCollectionUsuarioToAttach.getIdUsuario());
-                attachedUsuarioCollection.add(usuarioCollectionUsuarioToAttach);
+            tarjeta.setTarjetaIngresaEstacionList(attachedTarjetaIngresaEstacionList);
+            List<Usuario> attachedUsuarioList = new ArrayList<Usuario>();
+            for (Usuario usuarioListUsuarioToAttach : tarjeta.getUsuarioList()) {
+                usuarioListUsuarioToAttach = em.getReference(usuarioListUsuarioToAttach.getClass(), usuarioListUsuarioToAttach.getIdUsuario());
+                attachedUsuarioList.add(usuarioListUsuarioToAttach);
             }
-            tarjeta.setUsuarioCollection(attachedUsuarioCollection);
+            tarjeta.setUsuarioList(attachedUsuarioList);
             em.persist(tarjeta);
             if (recarga != null) {
                 Tarjeta oldTarjetaOfRecarga = recarga.getTarjeta();
@@ -82,25 +81,25 @@ public class TarjetaJpaController implements Serializable {
                 recarga = em.merge(recarga);
             }
             if (nombreEstacion != null) {
-                nombreEstacion.getTarjetaCollection().add(tarjeta);
+                nombreEstacion.getTarjetaList().add(tarjeta);
                 nombreEstacion = em.merge(nombreEstacion);
             }
-            for (TarjetaIngresaEstacion tarjetaIngresaEstacionCollectionTarjetaIngresaEstacion : tarjeta.getTarjetaIngresaEstacionCollection()) {
-                Tarjeta oldTarjetaOfTarjetaIngresaEstacionCollectionTarjetaIngresaEstacion = tarjetaIngresaEstacionCollectionTarjetaIngresaEstacion.getTarjeta();
-                tarjetaIngresaEstacionCollectionTarjetaIngresaEstacion.setTarjeta(tarjeta);
-                tarjetaIngresaEstacionCollectionTarjetaIngresaEstacion = em.merge(tarjetaIngresaEstacionCollectionTarjetaIngresaEstacion);
-                if (oldTarjetaOfTarjetaIngresaEstacionCollectionTarjetaIngresaEstacion != null) {
-                    oldTarjetaOfTarjetaIngresaEstacionCollectionTarjetaIngresaEstacion.getTarjetaIngresaEstacionCollection().remove(tarjetaIngresaEstacionCollectionTarjetaIngresaEstacion);
-                    oldTarjetaOfTarjetaIngresaEstacionCollectionTarjetaIngresaEstacion = em.merge(oldTarjetaOfTarjetaIngresaEstacionCollectionTarjetaIngresaEstacion);
+            for (TarjetaIngresaEstacion tarjetaIngresaEstacionListTarjetaIngresaEstacion : tarjeta.getTarjetaIngresaEstacionList()) {
+                Tarjeta oldTarjetaOfTarjetaIngresaEstacionListTarjetaIngresaEstacion = tarjetaIngresaEstacionListTarjetaIngresaEstacion.getTarjeta();
+                tarjetaIngresaEstacionListTarjetaIngresaEstacion.setTarjeta(tarjeta);
+                tarjetaIngresaEstacionListTarjetaIngresaEstacion = em.merge(tarjetaIngresaEstacionListTarjetaIngresaEstacion);
+                if (oldTarjetaOfTarjetaIngresaEstacionListTarjetaIngresaEstacion != null) {
+                    oldTarjetaOfTarjetaIngresaEstacionListTarjetaIngresaEstacion.getTarjetaIngresaEstacionList().remove(tarjetaIngresaEstacionListTarjetaIngresaEstacion);
+                    oldTarjetaOfTarjetaIngresaEstacionListTarjetaIngresaEstacion = em.merge(oldTarjetaOfTarjetaIngresaEstacionListTarjetaIngresaEstacion);
                 }
             }
-            for (Usuario usuarioCollectionUsuario : tarjeta.getUsuarioCollection()) {
-                Tarjeta oldPinTarjetaOfUsuarioCollectionUsuario = usuarioCollectionUsuario.getPinTarjeta();
-                usuarioCollectionUsuario.setPinTarjeta(tarjeta);
-                usuarioCollectionUsuario = em.merge(usuarioCollectionUsuario);
-                if (oldPinTarjetaOfUsuarioCollectionUsuario != null) {
-                    oldPinTarjetaOfUsuarioCollectionUsuario.getUsuarioCollection().remove(usuarioCollectionUsuario);
-                    oldPinTarjetaOfUsuarioCollectionUsuario = em.merge(oldPinTarjetaOfUsuarioCollectionUsuario);
+            for (Usuario usuarioListUsuario : tarjeta.getUsuarioList()) {
+                Tarjeta oldPinTarjetaOfUsuarioListUsuario = usuarioListUsuario.getPinTarjeta();
+                usuarioListUsuario.setPinTarjeta(tarjeta);
+                usuarioListUsuario = em.merge(usuarioListUsuario);
+                if (oldPinTarjetaOfUsuarioListUsuario != null) {
+                    oldPinTarjetaOfUsuarioListUsuario.getUsuarioList().remove(usuarioListUsuario);
+                    oldPinTarjetaOfUsuarioListUsuario = em.merge(oldPinTarjetaOfUsuarioListUsuario);
                 }
             }
             em.getTransaction().commit();
@@ -126,10 +125,10 @@ public class TarjetaJpaController implements Serializable {
             Recarga recargaNew = tarjeta.getRecarga();
             Estacion nombreEstacionOld = persistentTarjeta.getNombreEstacion();
             Estacion nombreEstacionNew = tarjeta.getNombreEstacion();
-            Collection<TarjetaIngresaEstacion> tarjetaIngresaEstacionCollectionOld = persistentTarjeta.getTarjetaIngresaEstacionCollection();
-            Collection<TarjetaIngresaEstacion> tarjetaIngresaEstacionCollectionNew = tarjeta.getTarjetaIngresaEstacionCollection();
-            Collection<Usuario> usuarioCollectionOld = persistentTarjeta.getUsuarioCollection();
-            Collection<Usuario> usuarioCollectionNew = tarjeta.getUsuarioCollection();
+            List<TarjetaIngresaEstacion> tarjetaIngresaEstacionListOld = persistentTarjeta.getTarjetaIngresaEstacionList();
+            List<TarjetaIngresaEstacion> tarjetaIngresaEstacionListNew = tarjeta.getTarjetaIngresaEstacionList();
+            List<Usuario> usuarioListOld = persistentTarjeta.getUsuarioList();
+            List<Usuario> usuarioListNew = tarjeta.getUsuarioList();
             List<String> illegalOrphanMessages = null;
             if (recargaOld != null && !recargaOld.equals(recargaNew)) {
                 if (illegalOrphanMessages == null) {
@@ -137,20 +136,20 @@ public class TarjetaJpaController implements Serializable {
                 }
                 illegalOrphanMessages.add("You must retain Recarga " + recargaOld + " since its tarjeta field is not nullable.");
             }
-            for (TarjetaIngresaEstacion tarjetaIngresaEstacionCollectionOldTarjetaIngresaEstacion : tarjetaIngresaEstacionCollectionOld) {
-                if (!tarjetaIngresaEstacionCollectionNew.contains(tarjetaIngresaEstacionCollectionOldTarjetaIngresaEstacion)) {
+            for (TarjetaIngresaEstacion tarjetaIngresaEstacionListOldTarjetaIngresaEstacion : tarjetaIngresaEstacionListOld) {
+                if (!tarjetaIngresaEstacionListNew.contains(tarjetaIngresaEstacionListOldTarjetaIngresaEstacion)) {
                     if (illegalOrphanMessages == null) {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
-                    illegalOrphanMessages.add("You must retain TarjetaIngresaEstacion " + tarjetaIngresaEstacionCollectionOldTarjetaIngresaEstacion + " since its tarjeta field is not nullable.");
+                    illegalOrphanMessages.add("You must retain TarjetaIngresaEstacion " + tarjetaIngresaEstacionListOldTarjetaIngresaEstacion + " since its tarjeta field is not nullable.");
                 }
             }
-            for (Usuario usuarioCollectionOldUsuario : usuarioCollectionOld) {
-                if (!usuarioCollectionNew.contains(usuarioCollectionOldUsuario)) {
+            for (Usuario usuarioListOldUsuario : usuarioListOld) {
+                if (!usuarioListNew.contains(usuarioListOldUsuario)) {
                     if (illegalOrphanMessages == null) {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
-                    illegalOrphanMessages.add("You must retain Usuario " + usuarioCollectionOldUsuario + " since its pinTarjeta field is not nullable.");
+                    illegalOrphanMessages.add("You must retain Usuario " + usuarioListOldUsuario + " since its pinTarjeta field is not nullable.");
                 }
             }
             if (illegalOrphanMessages != null) {
@@ -164,20 +163,20 @@ public class TarjetaJpaController implements Serializable {
                 nombreEstacionNew = em.getReference(nombreEstacionNew.getClass(), nombreEstacionNew.getNombreEstacion());
                 tarjeta.setNombreEstacion(nombreEstacionNew);
             }
-            Collection<TarjetaIngresaEstacion> attachedTarjetaIngresaEstacionCollectionNew = new ArrayList<TarjetaIngresaEstacion>();
-            for (TarjetaIngresaEstacion tarjetaIngresaEstacionCollectionNewTarjetaIngresaEstacionToAttach : tarjetaIngresaEstacionCollectionNew) {
-                tarjetaIngresaEstacionCollectionNewTarjetaIngresaEstacionToAttach = em.getReference(tarjetaIngresaEstacionCollectionNewTarjetaIngresaEstacionToAttach.getClass(), tarjetaIngresaEstacionCollectionNewTarjetaIngresaEstacionToAttach.getTarjetaIngresaEstacionPK());
-                attachedTarjetaIngresaEstacionCollectionNew.add(tarjetaIngresaEstacionCollectionNewTarjetaIngresaEstacionToAttach);
+            List<TarjetaIngresaEstacion> attachedTarjetaIngresaEstacionListNew = new ArrayList<TarjetaIngresaEstacion>();
+            for (TarjetaIngresaEstacion tarjetaIngresaEstacionListNewTarjetaIngresaEstacionToAttach : tarjetaIngresaEstacionListNew) {
+                tarjetaIngresaEstacionListNewTarjetaIngresaEstacionToAttach = em.getReference(tarjetaIngresaEstacionListNewTarjetaIngresaEstacionToAttach.getClass(), tarjetaIngresaEstacionListNewTarjetaIngresaEstacionToAttach.getTarjetaIngresaEstacionPK());
+                attachedTarjetaIngresaEstacionListNew.add(tarjetaIngresaEstacionListNewTarjetaIngresaEstacionToAttach);
             }
-            tarjetaIngresaEstacionCollectionNew = attachedTarjetaIngresaEstacionCollectionNew;
-            tarjeta.setTarjetaIngresaEstacionCollection(tarjetaIngresaEstacionCollectionNew);
-            Collection<Usuario> attachedUsuarioCollectionNew = new ArrayList<Usuario>();
-            for (Usuario usuarioCollectionNewUsuarioToAttach : usuarioCollectionNew) {
-                usuarioCollectionNewUsuarioToAttach = em.getReference(usuarioCollectionNewUsuarioToAttach.getClass(), usuarioCollectionNewUsuarioToAttach.getIdUsuario());
-                attachedUsuarioCollectionNew.add(usuarioCollectionNewUsuarioToAttach);
+            tarjetaIngresaEstacionListNew = attachedTarjetaIngresaEstacionListNew;
+            tarjeta.setTarjetaIngresaEstacionList(tarjetaIngresaEstacionListNew);
+            List<Usuario> attachedUsuarioListNew = new ArrayList<Usuario>();
+            for (Usuario usuarioListNewUsuarioToAttach : usuarioListNew) {
+                usuarioListNewUsuarioToAttach = em.getReference(usuarioListNewUsuarioToAttach.getClass(), usuarioListNewUsuarioToAttach.getIdUsuario());
+                attachedUsuarioListNew.add(usuarioListNewUsuarioToAttach);
             }
-            usuarioCollectionNew = attachedUsuarioCollectionNew;
-            tarjeta.setUsuarioCollection(usuarioCollectionNew);
+            usuarioListNew = attachedUsuarioListNew;
+            tarjeta.setUsuarioList(usuarioListNew);
             tarjeta = em.merge(tarjeta);
             if (recargaNew != null && !recargaNew.equals(recargaOld)) {
                 Tarjeta oldTarjetaOfRecarga = recargaNew.getTarjeta();
@@ -189,32 +188,32 @@ public class TarjetaJpaController implements Serializable {
                 recargaNew = em.merge(recargaNew);
             }
             if (nombreEstacionOld != null && !nombreEstacionOld.equals(nombreEstacionNew)) {
-                nombreEstacionOld.getTarjetaCollection().remove(tarjeta);
+                nombreEstacionOld.getTarjetaList().remove(tarjeta);
                 nombreEstacionOld = em.merge(nombreEstacionOld);
             }
             if (nombreEstacionNew != null && !nombreEstacionNew.equals(nombreEstacionOld)) {
-                nombreEstacionNew.getTarjetaCollection().add(tarjeta);
+                nombreEstacionNew.getTarjetaList().add(tarjeta);
                 nombreEstacionNew = em.merge(nombreEstacionNew);
             }
-            for (TarjetaIngresaEstacion tarjetaIngresaEstacionCollectionNewTarjetaIngresaEstacion : tarjetaIngresaEstacionCollectionNew) {
-                if (!tarjetaIngresaEstacionCollectionOld.contains(tarjetaIngresaEstacionCollectionNewTarjetaIngresaEstacion)) {
-                    Tarjeta oldTarjetaOfTarjetaIngresaEstacionCollectionNewTarjetaIngresaEstacion = tarjetaIngresaEstacionCollectionNewTarjetaIngresaEstacion.getTarjeta();
-                    tarjetaIngresaEstacionCollectionNewTarjetaIngresaEstacion.setTarjeta(tarjeta);
-                    tarjetaIngresaEstacionCollectionNewTarjetaIngresaEstacion = em.merge(tarjetaIngresaEstacionCollectionNewTarjetaIngresaEstacion);
-                    if (oldTarjetaOfTarjetaIngresaEstacionCollectionNewTarjetaIngresaEstacion != null && !oldTarjetaOfTarjetaIngresaEstacionCollectionNewTarjetaIngresaEstacion.equals(tarjeta)) {
-                        oldTarjetaOfTarjetaIngresaEstacionCollectionNewTarjetaIngresaEstacion.getTarjetaIngresaEstacionCollection().remove(tarjetaIngresaEstacionCollectionNewTarjetaIngresaEstacion);
-                        oldTarjetaOfTarjetaIngresaEstacionCollectionNewTarjetaIngresaEstacion = em.merge(oldTarjetaOfTarjetaIngresaEstacionCollectionNewTarjetaIngresaEstacion);
+            for (TarjetaIngresaEstacion tarjetaIngresaEstacionListNewTarjetaIngresaEstacion : tarjetaIngresaEstacionListNew) {
+                if (!tarjetaIngresaEstacionListOld.contains(tarjetaIngresaEstacionListNewTarjetaIngresaEstacion)) {
+                    Tarjeta oldTarjetaOfTarjetaIngresaEstacionListNewTarjetaIngresaEstacion = tarjetaIngresaEstacionListNewTarjetaIngresaEstacion.getTarjeta();
+                    tarjetaIngresaEstacionListNewTarjetaIngresaEstacion.setTarjeta(tarjeta);
+                    tarjetaIngresaEstacionListNewTarjetaIngresaEstacion = em.merge(tarjetaIngresaEstacionListNewTarjetaIngresaEstacion);
+                    if (oldTarjetaOfTarjetaIngresaEstacionListNewTarjetaIngresaEstacion != null && !oldTarjetaOfTarjetaIngresaEstacionListNewTarjetaIngresaEstacion.equals(tarjeta)) {
+                        oldTarjetaOfTarjetaIngresaEstacionListNewTarjetaIngresaEstacion.getTarjetaIngresaEstacionList().remove(tarjetaIngresaEstacionListNewTarjetaIngresaEstacion);
+                        oldTarjetaOfTarjetaIngresaEstacionListNewTarjetaIngresaEstacion = em.merge(oldTarjetaOfTarjetaIngresaEstacionListNewTarjetaIngresaEstacion);
                     }
                 }
             }
-            for (Usuario usuarioCollectionNewUsuario : usuarioCollectionNew) {
-                if (!usuarioCollectionOld.contains(usuarioCollectionNewUsuario)) {
-                    Tarjeta oldPinTarjetaOfUsuarioCollectionNewUsuario = usuarioCollectionNewUsuario.getPinTarjeta();
-                    usuarioCollectionNewUsuario.setPinTarjeta(tarjeta);
-                    usuarioCollectionNewUsuario = em.merge(usuarioCollectionNewUsuario);
-                    if (oldPinTarjetaOfUsuarioCollectionNewUsuario != null && !oldPinTarjetaOfUsuarioCollectionNewUsuario.equals(tarjeta)) {
-                        oldPinTarjetaOfUsuarioCollectionNewUsuario.getUsuarioCollection().remove(usuarioCollectionNewUsuario);
-                        oldPinTarjetaOfUsuarioCollectionNewUsuario = em.merge(oldPinTarjetaOfUsuarioCollectionNewUsuario);
+            for (Usuario usuarioListNewUsuario : usuarioListNew) {
+                if (!usuarioListOld.contains(usuarioListNewUsuario)) {
+                    Tarjeta oldPinTarjetaOfUsuarioListNewUsuario = usuarioListNewUsuario.getPinTarjeta();
+                    usuarioListNewUsuario.setPinTarjeta(tarjeta);
+                    usuarioListNewUsuario = em.merge(usuarioListNewUsuario);
+                    if (oldPinTarjetaOfUsuarioListNewUsuario != null && !oldPinTarjetaOfUsuarioListNewUsuario.equals(tarjeta)) {
+                        oldPinTarjetaOfUsuarioListNewUsuario.getUsuarioList().remove(usuarioListNewUsuario);
+                        oldPinTarjetaOfUsuarioListNewUsuario = em.merge(oldPinTarjetaOfUsuarioListNewUsuario);
                     }
                 }
             }
@@ -222,7 +221,7 @@ public class TarjetaJpaController implements Serializable {
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                Integer id = tarjeta.getPin();
+                String id = tarjeta.getPin();
                 if (findTarjeta(id) == null) {
                     throw new NonexistentEntityException("The tarjeta with id " + id + " no longer exists.");
                 }
@@ -235,7 +234,7 @@ public class TarjetaJpaController implements Serializable {
         }
     }
 
-    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
+    public void destroy(String id) throws IllegalOrphanException, NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -255,26 +254,26 @@ public class TarjetaJpaController implements Serializable {
                 }
                 illegalOrphanMessages.add("This Tarjeta (" + tarjeta + ") cannot be destroyed since the Recarga " + recargaOrphanCheck + " in its recarga field has a non-nullable tarjeta field.");
             }
-            Collection<TarjetaIngresaEstacion> tarjetaIngresaEstacionCollectionOrphanCheck = tarjeta.getTarjetaIngresaEstacionCollection();
-            for (TarjetaIngresaEstacion tarjetaIngresaEstacionCollectionOrphanCheckTarjetaIngresaEstacion : tarjetaIngresaEstacionCollectionOrphanCheck) {
+            List<TarjetaIngresaEstacion> tarjetaIngresaEstacionListOrphanCheck = tarjeta.getTarjetaIngresaEstacionList();
+            for (TarjetaIngresaEstacion tarjetaIngresaEstacionListOrphanCheckTarjetaIngresaEstacion : tarjetaIngresaEstacionListOrphanCheck) {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
-                illegalOrphanMessages.add("This Tarjeta (" + tarjeta + ") cannot be destroyed since the TarjetaIngresaEstacion " + tarjetaIngresaEstacionCollectionOrphanCheckTarjetaIngresaEstacion + " in its tarjetaIngresaEstacionCollection field has a non-nullable tarjeta field.");
+                illegalOrphanMessages.add("This Tarjeta (" + tarjeta + ") cannot be destroyed since the TarjetaIngresaEstacion " + tarjetaIngresaEstacionListOrphanCheckTarjetaIngresaEstacion + " in its tarjetaIngresaEstacionList field has a non-nullable tarjeta field.");
             }
-            Collection<Usuario> usuarioCollectionOrphanCheck = tarjeta.getUsuarioCollection();
-            for (Usuario usuarioCollectionOrphanCheckUsuario : usuarioCollectionOrphanCheck) {
+            List<Usuario> usuarioListOrphanCheck = tarjeta.getUsuarioList();
+            for (Usuario usuarioListOrphanCheckUsuario : usuarioListOrphanCheck) {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
-                illegalOrphanMessages.add("This Tarjeta (" + tarjeta + ") cannot be destroyed since the Usuario " + usuarioCollectionOrphanCheckUsuario + " in its usuarioCollection field has a non-nullable pinTarjeta field.");
+                illegalOrphanMessages.add("This Tarjeta (" + tarjeta + ") cannot be destroyed since the Usuario " + usuarioListOrphanCheckUsuario + " in its usuarioList field has a non-nullable pinTarjeta field.");
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
             Estacion nombreEstacion = tarjeta.getNombreEstacion();
             if (nombreEstacion != null) {
-                nombreEstacion.getTarjetaCollection().remove(tarjeta);
+                nombreEstacion.getTarjetaList().remove(tarjeta);
                 nombreEstacion = em.merge(nombreEstacion);
             }
             em.remove(tarjeta);
@@ -310,7 +309,7 @@ public class TarjetaJpaController implements Serializable {
         }
     }
 
-    public Tarjeta findTarjeta(Integer id) {
+    public Tarjeta findTarjeta(String id) {
         EntityManager em = getEntityManager();
         try {
             return em.find(Tarjeta.class, id);

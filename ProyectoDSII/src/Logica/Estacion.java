@@ -5,7 +5,7 @@
 package Logica;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Dash
+ * @author Usuario
  */
 @Entity
 @Table(name = "estacion")
@@ -49,18 +49,18 @@ public class Estacion implements Serializable {
         @JoinColumn(name = "nombre_estacion", referencedColumnName = "nombre_estacion")}, inverseJoinColumns = {
         @JoinColumn(name = "nombre_ruta", referencedColumnName = "nombre_ruta")})
     @ManyToMany
-    private Collection<Ruta> rutaCollection;
+    private List<Ruta> rutaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "estacion")
-    private Collection<TarjetaIngresaEstacion> tarjetaIngresaEstacionCollection;
+    private List<TarjetaIngresaEstacion> tarjetaIngresaEstacionList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "estacion1")
-    private Collection<TarjetaIngresaEstacion> tarjetaIngresaEstacionCollection1;
+    private List<TarjetaIngresaEstacion> tarjetaIngresaEstacionList1;
     @JoinColumn(name = "id_empleado", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Empleado idEmpleado;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "nombreEstacion")
-    private Collection<Tarjeta> tarjetaCollection;
+    private List<Tarjeta> tarjetaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "nombreEstacion")
-    private Collection<Solicitud> solicitudCollection;
+    private List<Solicitud> solicitudList;
 
     public Estacion() {
     }
@@ -99,30 +99,30 @@ public class Estacion implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Ruta> getRutaCollection() {
-        return rutaCollection;
+    public List<Ruta> getRutaList() {
+        return rutaList;
     }
 
-    public void setRutaCollection(Collection<Ruta> rutaCollection) {
-        this.rutaCollection = rutaCollection;
-    }
-
-    @XmlTransient
-    public Collection<TarjetaIngresaEstacion> getTarjetaIngresaEstacionCollection() {
-        return tarjetaIngresaEstacionCollection;
-    }
-
-    public void setTarjetaIngresaEstacionCollection(Collection<TarjetaIngresaEstacion> tarjetaIngresaEstacionCollection) {
-        this.tarjetaIngresaEstacionCollection = tarjetaIngresaEstacionCollection;
+    public void setRutaList(List<Ruta> rutaList) {
+        this.rutaList = rutaList;
     }
 
     @XmlTransient
-    public Collection<TarjetaIngresaEstacion> getTarjetaIngresaEstacionCollection1() {
-        return tarjetaIngresaEstacionCollection1;
+    public List<TarjetaIngresaEstacion> getTarjetaIngresaEstacionList() {
+        return tarjetaIngresaEstacionList;
     }
 
-    public void setTarjetaIngresaEstacionCollection1(Collection<TarjetaIngresaEstacion> tarjetaIngresaEstacionCollection1) {
-        this.tarjetaIngresaEstacionCollection1 = tarjetaIngresaEstacionCollection1;
+    public void setTarjetaIngresaEstacionList(List<TarjetaIngresaEstacion> tarjetaIngresaEstacionList) {
+        this.tarjetaIngresaEstacionList = tarjetaIngresaEstacionList;
+    }
+
+    @XmlTransient
+    public List<TarjetaIngresaEstacion> getTarjetaIngresaEstacionList1() {
+        return tarjetaIngresaEstacionList1;
+    }
+
+    public void setTarjetaIngresaEstacionList1(List<TarjetaIngresaEstacion> tarjetaIngresaEstacionList1) {
+        this.tarjetaIngresaEstacionList1 = tarjetaIngresaEstacionList1;
     }
 
     public Empleado getIdEmpleado() {
@@ -134,21 +134,21 @@ public class Estacion implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Tarjeta> getTarjetaCollection() {
-        return tarjetaCollection;
+    public List<Tarjeta> getTarjetaList() {
+        return tarjetaList;
     }
 
-    public void setTarjetaCollection(Collection<Tarjeta> tarjetaCollection) {
-        this.tarjetaCollection = tarjetaCollection;
+    public void setTarjetaList(List<Tarjeta> tarjetaList) {
+        this.tarjetaList = tarjetaList;
     }
 
     @XmlTransient
-    public Collection<Solicitud> getSolicitudCollection() {
-        return solicitudCollection;
+    public List<Solicitud> getSolicitudList() {
+        return solicitudList;
     }
 
-    public void setSolicitudCollection(Collection<Solicitud> solicitudCollection) {
-        this.solicitudCollection = solicitudCollection;
+    public void setSolicitudList(List<Solicitud> solicitudList) {
+        this.solicitudList = solicitudList;
     }
 
     @Override

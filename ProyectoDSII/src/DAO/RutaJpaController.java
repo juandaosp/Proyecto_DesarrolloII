@@ -14,16 +14,15 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import Logica.Estacion;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 import Logica.Programacion;
 import Logica.Ruta;
-import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author Dash
+ * @author Usuario
  */
 public class RutaJpaController implements Serializable {
 
@@ -37,40 +36,40 @@ public class RutaJpaController implements Serializable {
     }
 
     public void create(Ruta ruta) throws PreexistingEntityException, Exception {
-        if (ruta.getEstacionCollection() == null) {
-            ruta.setEstacionCollection(new ArrayList<Estacion>());
+        if (ruta.getEstacionList() == null) {
+            ruta.setEstacionList(new ArrayList<Estacion>());
         }
-        if (ruta.getProgramacionCollection() == null) {
-            ruta.setProgramacionCollection(new ArrayList<Programacion>());
+        if (ruta.getProgramacionList() == null) {
+            ruta.setProgramacionList(new ArrayList<Programacion>());
         }
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Collection<Estacion> attachedEstacionCollection = new ArrayList<Estacion>();
-            for (Estacion estacionCollectionEstacionToAttach : ruta.getEstacionCollection()) {
-                estacionCollectionEstacionToAttach = em.getReference(estacionCollectionEstacionToAttach.getClass(), estacionCollectionEstacionToAttach.getNombreEstacion());
-                attachedEstacionCollection.add(estacionCollectionEstacionToAttach);
+            List<Estacion> attachedEstacionList = new ArrayList<Estacion>();
+            for (Estacion estacionListEstacionToAttach : ruta.getEstacionList()) {
+                estacionListEstacionToAttach = em.getReference(estacionListEstacionToAttach.getClass(), estacionListEstacionToAttach.getNombreEstacion());
+                attachedEstacionList.add(estacionListEstacionToAttach);
             }
-            ruta.setEstacionCollection(attachedEstacionCollection);
-            Collection<Programacion> attachedProgramacionCollection = new ArrayList<Programacion>();
-            for (Programacion programacionCollectionProgramacionToAttach : ruta.getProgramacionCollection()) {
-                programacionCollectionProgramacionToAttach = em.getReference(programacionCollectionProgramacionToAttach.getClass(), programacionCollectionProgramacionToAttach.getProgramacionPK());
-                attachedProgramacionCollection.add(programacionCollectionProgramacionToAttach);
+            ruta.setEstacionList(attachedEstacionList);
+            List<Programacion> attachedProgramacionList = new ArrayList<Programacion>();
+            for (Programacion programacionListProgramacionToAttach : ruta.getProgramacionList()) {
+                programacionListProgramacionToAttach = em.getReference(programacionListProgramacionToAttach.getClass(), programacionListProgramacionToAttach.getProgramacionPK());
+                attachedProgramacionList.add(programacionListProgramacionToAttach);
             }
-            ruta.setProgramacionCollection(attachedProgramacionCollection);
+            ruta.setProgramacionList(attachedProgramacionList);
             em.persist(ruta);
-            for (Estacion estacionCollectionEstacion : ruta.getEstacionCollection()) {
-                estacionCollectionEstacion.getRutaCollection().add(ruta);
-                estacionCollectionEstacion = em.merge(estacionCollectionEstacion);
+            for (Estacion estacionListEstacion : ruta.getEstacionList()) {
+                estacionListEstacion.getRutaList().add(ruta);
+                estacionListEstacion = em.merge(estacionListEstacion);
             }
-            for (Programacion programacionCollectionProgramacion : ruta.getProgramacionCollection()) {
-                Ruta oldRutaOfProgramacionCollectionProgramacion = programacionCollectionProgramacion.getRuta();
-                programacionCollectionProgramacion.setRuta(ruta);
-                programacionCollectionProgramacion = em.merge(programacionCollectionProgramacion);
-                if (oldRutaOfProgramacionCollectionProgramacion != null) {
-                    oldRutaOfProgramacionCollectionProgramacion.getProgramacionCollection().remove(programacionCollectionProgramacion);
-                    oldRutaOfProgramacionCollectionProgramacion = em.merge(oldRutaOfProgramacionCollectionProgramacion);
+            for (Programacion programacionListProgramacion : ruta.getProgramacionList()) {
+                Ruta oldRutaOfProgramacionListProgramacion = programacionListProgramacion.getRuta();
+                programacionListProgramacion.setRuta(ruta);
+                programacionListProgramacion = em.merge(programacionListProgramacion);
+                if (oldRutaOfProgramacionListProgramacion != null) {
+                    oldRutaOfProgramacionListProgramacion.getProgramacionList().remove(programacionListProgramacion);
+                    oldRutaOfProgramacionListProgramacion = em.merge(oldRutaOfProgramacionListProgramacion);
                 }
             }
             em.getTransaction().commit();
@@ -92,57 +91,57 @@ public class RutaJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Ruta persistentRuta = em.find(Ruta.class, ruta.getNombreRuta());
-            Collection<Estacion> estacionCollectionOld = persistentRuta.getEstacionCollection();
-            Collection<Estacion> estacionCollectionNew = ruta.getEstacionCollection();
-            Collection<Programacion> programacionCollectionOld = persistentRuta.getProgramacionCollection();
-            Collection<Programacion> programacionCollectionNew = ruta.getProgramacionCollection();
+            List<Estacion> estacionListOld = persistentRuta.getEstacionList();
+            List<Estacion> estacionListNew = ruta.getEstacionList();
+            List<Programacion> programacionListOld = persistentRuta.getProgramacionList();
+            List<Programacion> programacionListNew = ruta.getProgramacionList();
             List<String> illegalOrphanMessages = null;
-            for (Programacion programacionCollectionOldProgramacion : programacionCollectionOld) {
-                if (!programacionCollectionNew.contains(programacionCollectionOldProgramacion)) {
+            for (Programacion programacionListOldProgramacion : programacionListOld) {
+                if (!programacionListNew.contains(programacionListOldProgramacion)) {
                     if (illegalOrphanMessages == null) {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
-                    illegalOrphanMessages.add("You must retain Programacion " + programacionCollectionOldProgramacion + " since its ruta field is not nullable.");
+                    illegalOrphanMessages.add("You must retain Programacion " + programacionListOldProgramacion + " since its ruta field is not nullable.");
                 }
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            Collection<Estacion> attachedEstacionCollectionNew = new ArrayList<Estacion>();
-            for (Estacion estacionCollectionNewEstacionToAttach : estacionCollectionNew) {
-                estacionCollectionNewEstacionToAttach = em.getReference(estacionCollectionNewEstacionToAttach.getClass(), estacionCollectionNewEstacionToAttach.getNombreEstacion());
-                attachedEstacionCollectionNew.add(estacionCollectionNewEstacionToAttach);
+            List<Estacion> attachedEstacionListNew = new ArrayList<Estacion>();
+            for (Estacion estacionListNewEstacionToAttach : estacionListNew) {
+                estacionListNewEstacionToAttach = em.getReference(estacionListNewEstacionToAttach.getClass(), estacionListNewEstacionToAttach.getNombreEstacion());
+                attachedEstacionListNew.add(estacionListNewEstacionToAttach);
             }
-            estacionCollectionNew = attachedEstacionCollectionNew;
-            ruta.setEstacionCollection(estacionCollectionNew);
-            Collection<Programacion> attachedProgramacionCollectionNew = new ArrayList<Programacion>();
-            for (Programacion programacionCollectionNewProgramacionToAttach : programacionCollectionNew) {
-                programacionCollectionNewProgramacionToAttach = em.getReference(programacionCollectionNewProgramacionToAttach.getClass(), programacionCollectionNewProgramacionToAttach.getProgramacionPK());
-                attachedProgramacionCollectionNew.add(programacionCollectionNewProgramacionToAttach);
+            estacionListNew = attachedEstacionListNew;
+            ruta.setEstacionList(estacionListNew);
+            List<Programacion> attachedProgramacionListNew = new ArrayList<Programacion>();
+            for (Programacion programacionListNewProgramacionToAttach : programacionListNew) {
+                programacionListNewProgramacionToAttach = em.getReference(programacionListNewProgramacionToAttach.getClass(), programacionListNewProgramacionToAttach.getProgramacionPK());
+                attachedProgramacionListNew.add(programacionListNewProgramacionToAttach);
             }
-            programacionCollectionNew = attachedProgramacionCollectionNew;
-            ruta.setProgramacionCollection(programacionCollectionNew);
+            programacionListNew = attachedProgramacionListNew;
+            ruta.setProgramacionList(programacionListNew);
             ruta = em.merge(ruta);
-            for (Estacion estacionCollectionOldEstacion : estacionCollectionOld) {
-                if (!estacionCollectionNew.contains(estacionCollectionOldEstacion)) {
-                    estacionCollectionOldEstacion.getRutaCollection().remove(ruta);
-                    estacionCollectionOldEstacion = em.merge(estacionCollectionOldEstacion);
+            for (Estacion estacionListOldEstacion : estacionListOld) {
+                if (!estacionListNew.contains(estacionListOldEstacion)) {
+                    estacionListOldEstacion.getRutaList().remove(ruta);
+                    estacionListOldEstacion = em.merge(estacionListOldEstacion);
                 }
             }
-            for (Estacion estacionCollectionNewEstacion : estacionCollectionNew) {
-                if (!estacionCollectionOld.contains(estacionCollectionNewEstacion)) {
-                    estacionCollectionNewEstacion.getRutaCollection().add(ruta);
-                    estacionCollectionNewEstacion = em.merge(estacionCollectionNewEstacion);
+            for (Estacion estacionListNewEstacion : estacionListNew) {
+                if (!estacionListOld.contains(estacionListNewEstacion)) {
+                    estacionListNewEstacion.getRutaList().add(ruta);
+                    estacionListNewEstacion = em.merge(estacionListNewEstacion);
                 }
             }
-            for (Programacion programacionCollectionNewProgramacion : programacionCollectionNew) {
-                if (!programacionCollectionOld.contains(programacionCollectionNewProgramacion)) {
-                    Ruta oldRutaOfProgramacionCollectionNewProgramacion = programacionCollectionNewProgramacion.getRuta();
-                    programacionCollectionNewProgramacion.setRuta(ruta);
-                    programacionCollectionNewProgramacion = em.merge(programacionCollectionNewProgramacion);
-                    if (oldRutaOfProgramacionCollectionNewProgramacion != null && !oldRutaOfProgramacionCollectionNewProgramacion.equals(ruta)) {
-                        oldRutaOfProgramacionCollectionNewProgramacion.getProgramacionCollection().remove(programacionCollectionNewProgramacion);
-                        oldRutaOfProgramacionCollectionNewProgramacion = em.merge(oldRutaOfProgramacionCollectionNewProgramacion);
+            for (Programacion programacionListNewProgramacion : programacionListNew) {
+                if (!programacionListOld.contains(programacionListNewProgramacion)) {
+                    Ruta oldRutaOfProgramacionListNewProgramacion = programacionListNewProgramacion.getRuta();
+                    programacionListNewProgramacion.setRuta(ruta);
+                    programacionListNewProgramacion = em.merge(programacionListNewProgramacion);
+                    if (oldRutaOfProgramacionListNewProgramacion != null && !oldRutaOfProgramacionListNewProgramacion.equals(ruta)) {
+                        oldRutaOfProgramacionListNewProgramacion.getProgramacionList().remove(programacionListNewProgramacion);
+                        oldRutaOfProgramacionListNewProgramacion = em.merge(oldRutaOfProgramacionListNewProgramacion);
                     }
                 }
             }
@@ -176,20 +175,20 @@ public class RutaJpaController implements Serializable {
                 throw new NonexistentEntityException("The ruta with id " + id + " no longer exists.", enfe);
             }
             List<String> illegalOrphanMessages = null;
-            Collection<Programacion> programacionCollectionOrphanCheck = ruta.getProgramacionCollection();
-            for (Programacion programacionCollectionOrphanCheckProgramacion : programacionCollectionOrphanCheck) {
+            List<Programacion> programacionListOrphanCheck = ruta.getProgramacionList();
+            for (Programacion programacionListOrphanCheckProgramacion : programacionListOrphanCheck) {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
-                illegalOrphanMessages.add("This Ruta (" + ruta + ") cannot be destroyed since the Programacion " + programacionCollectionOrphanCheckProgramacion + " in its programacionCollection field has a non-nullable ruta field.");
+                illegalOrphanMessages.add("This Ruta (" + ruta + ") cannot be destroyed since the Programacion " + programacionListOrphanCheckProgramacion + " in its programacionList field has a non-nullable ruta field.");
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            Collection<Estacion> estacionCollection = ruta.getEstacionCollection();
-            for (Estacion estacionCollectionEstacion : estacionCollection) {
-                estacionCollectionEstacion.getRutaCollection().remove(ruta);
-                estacionCollectionEstacion = em.merge(estacionCollectionEstacion);
+            List<Estacion> estacionList = ruta.getEstacionList();
+            for (Estacion estacionListEstacion : estacionList) {
+                estacionListEstacion.getRutaList().remove(ruta);
+                estacionListEstacion = em.merge(estacionListEstacion);
             }
             em.remove(ruta);
             em.getTransaction().commit();

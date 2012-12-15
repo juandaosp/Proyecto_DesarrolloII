@@ -5,8 +5,8 @@
 package Logica;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Dash
+ * @author Usuario
  */
 @Entity
 @Table(name = "empleado")
@@ -83,9 +83,9 @@ public class Empleado implements Serializable {
     @Column(name = "estado")
     private String estado;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleado")
-    private Collection<Programacion> programacionCollection;
+    private List<Programacion> programacionList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEmpleado")
-    private Collection<Estacion> estacionCollection;
+    private List<Estacion> estacionList;
 
     public Empleado() {
     }
@@ -206,21 +206,21 @@ public class Empleado implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Programacion> getProgramacionCollection() {
-        return programacionCollection;
+    public List<Programacion> getProgramacionList() {
+        return programacionList;
     }
 
-    public void setProgramacionCollection(Collection<Programacion> programacionCollection) {
-        this.programacionCollection = programacionCollection;
+    public void setProgramacionList(List<Programacion> programacionList) {
+        this.programacionList = programacionList;
     }
 
     @XmlTransient
-    public Collection<Estacion> getEstacionCollection() {
-        return estacionCollection;
+    public List<Estacion> getEstacionList() {
+        return estacionList;
     }
 
-    public void setEstacionCollection(Collection<Estacion> estacionCollection) {
-        this.estacionCollection = estacionCollection;
+    public void setEstacionList(List<Estacion> estacionList) {
+        this.estacionList = estacionList;
     }
 
     @Override

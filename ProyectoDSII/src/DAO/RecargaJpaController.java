@@ -21,7 +21,7 @@ import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author Dash
+ * @author Usuario
  */
 public class RecargaJpaController implements Serializable {
 
@@ -114,7 +114,7 @@ public class RecargaJpaController implements Serializable {
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                Integer id = recarga.getPinTarjeta();
+                String id = recarga.getPinTarjeta();
                 if (findRecarga(id) == null) {
                     throw new NonexistentEntityException("The recarga with id " + id + " no longer exists.");
                 }
@@ -127,7 +127,7 @@ public class RecargaJpaController implements Serializable {
         }
     }
 
-    public void destroy(Integer id) throws NonexistentEntityException {
+    public void destroy(String id) throws NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -177,7 +177,7 @@ public class RecargaJpaController implements Serializable {
         }
     }
 
-    public Recarga findRecarga(Integer id) {
+    public Recarga findRecarga(String id) {
         EntityManager em = getEntityManager();
         try {
             return em.find(Recarga.class, id);

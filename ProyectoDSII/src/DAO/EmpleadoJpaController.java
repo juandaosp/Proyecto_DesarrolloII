@@ -15,15 +15,14 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import Logica.Programacion;
 import java.util.ArrayList;
-import java.util.Collection;
-import Logica.Estacion;
 import java.util.List;
+import Logica.Estacion;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author Dash
+ * @author Usuario
  */
 public class EmpleadoJpaController implements Serializable {
 
@@ -37,45 +36,45 @@ public class EmpleadoJpaController implements Serializable {
     }
 
     public void create(Empleado empleado) throws PreexistingEntityException, Exception {
-        if (empleado.getProgramacionCollection() == null) {
-            empleado.setProgramacionCollection(new ArrayList<Programacion>());
+        if (empleado.getProgramacionList() == null) {
+            empleado.setProgramacionList(new ArrayList<Programacion>());
         }
-        if (empleado.getEstacionCollection() == null) {
-            empleado.setEstacionCollection(new ArrayList<Estacion>());
+        if (empleado.getEstacionList() == null) {
+            empleado.setEstacionList(new ArrayList<Estacion>());
         }
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Collection<Programacion> attachedProgramacionCollection = new ArrayList<Programacion>();
-            for (Programacion programacionCollectionProgramacionToAttach : empleado.getProgramacionCollection()) {
-                programacionCollectionProgramacionToAttach = em.getReference(programacionCollectionProgramacionToAttach.getClass(), programacionCollectionProgramacionToAttach.getProgramacionPK());
-                attachedProgramacionCollection.add(programacionCollectionProgramacionToAttach);
+            List<Programacion> attachedProgramacionList = new ArrayList<Programacion>();
+            for (Programacion programacionListProgramacionToAttach : empleado.getProgramacionList()) {
+                programacionListProgramacionToAttach = em.getReference(programacionListProgramacionToAttach.getClass(), programacionListProgramacionToAttach.getProgramacionPK());
+                attachedProgramacionList.add(programacionListProgramacionToAttach);
             }
-            empleado.setProgramacionCollection(attachedProgramacionCollection);
-            Collection<Estacion> attachedEstacionCollection = new ArrayList<Estacion>();
-            for (Estacion estacionCollectionEstacionToAttach : empleado.getEstacionCollection()) {
-                estacionCollectionEstacionToAttach = em.getReference(estacionCollectionEstacionToAttach.getClass(), estacionCollectionEstacionToAttach.getNombreEstacion());
-                attachedEstacionCollection.add(estacionCollectionEstacionToAttach);
+            empleado.setProgramacionList(attachedProgramacionList);
+            List<Estacion> attachedEstacionList = new ArrayList<Estacion>();
+            for (Estacion estacionListEstacionToAttach : empleado.getEstacionList()) {
+                estacionListEstacionToAttach = em.getReference(estacionListEstacionToAttach.getClass(), estacionListEstacionToAttach.getNombreEstacion());
+                attachedEstacionList.add(estacionListEstacionToAttach);
             }
-            empleado.setEstacionCollection(attachedEstacionCollection);
+            empleado.setEstacionList(attachedEstacionList);
             em.persist(empleado);
-            for (Programacion programacionCollectionProgramacion : empleado.getProgramacionCollection()) {
-                Empleado oldEmpleadoOfProgramacionCollectionProgramacion = programacionCollectionProgramacion.getEmpleado();
-                programacionCollectionProgramacion.setEmpleado(empleado);
-                programacionCollectionProgramacion = em.merge(programacionCollectionProgramacion);
-                if (oldEmpleadoOfProgramacionCollectionProgramacion != null) {
-                    oldEmpleadoOfProgramacionCollectionProgramacion.getProgramacionCollection().remove(programacionCollectionProgramacion);
-                    oldEmpleadoOfProgramacionCollectionProgramacion = em.merge(oldEmpleadoOfProgramacionCollectionProgramacion);
+            for (Programacion programacionListProgramacion : empleado.getProgramacionList()) {
+                Empleado oldEmpleadoOfProgramacionListProgramacion = programacionListProgramacion.getEmpleado();
+                programacionListProgramacion.setEmpleado(empleado);
+                programacionListProgramacion = em.merge(programacionListProgramacion);
+                if (oldEmpleadoOfProgramacionListProgramacion != null) {
+                    oldEmpleadoOfProgramacionListProgramacion.getProgramacionList().remove(programacionListProgramacion);
+                    oldEmpleadoOfProgramacionListProgramacion = em.merge(oldEmpleadoOfProgramacionListProgramacion);
                 }
             }
-            for (Estacion estacionCollectionEstacion : empleado.getEstacionCollection()) {
-                Empleado oldIdEmpleadoOfEstacionCollectionEstacion = estacionCollectionEstacion.getIdEmpleado();
-                estacionCollectionEstacion.setIdEmpleado(empleado);
-                estacionCollectionEstacion = em.merge(estacionCollectionEstacion);
-                if (oldIdEmpleadoOfEstacionCollectionEstacion != null) {
-                    oldIdEmpleadoOfEstacionCollectionEstacion.getEstacionCollection().remove(estacionCollectionEstacion);
-                    oldIdEmpleadoOfEstacionCollectionEstacion = em.merge(oldIdEmpleadoOfEstacionCollectionEstacion);
+            for (Estacion estacionListEstacion : empleado.getEstacionList()) {
+                Empleado oldIdEmpleadoOfEstacionListEstacion = estacionListEstacion.getIdEmpleado();
+                estacionListEstacion.setIdEmpleado(empleado);
+                estacionListEstacion = em.merge(estacionListEstacion);
+                if (oldIdEmpleadoOfEstacionListEstacion != null) {
+                    oldIdEmpleadoOfEstacionListEstacion.getEstacionList().remove(estacionListEstacion);
+                    oldIdEmpleadoOfEstacionListEstacion = em.merge(oldIdEmpleadoOfEstacionListEstacion);
                 }
             }
             em.getTransaction().commit();
@@ -97,64 +96,64 @@ public class EmpleadoJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Empleado persistentEmpleado = em.find(Empleado.class, empleado.getId());
-            Collection<Programacion> programacionCollectionOld = persistentEmpleado.getProgramacionCollection();
-            Collection<Programacion> programacionCollectionNew = empleado.getProgramacionCollection();
-            Collection<Estacion> estacionCollectionOld = persistentEmpleado.getEstacionCollection();
-            Collection<Estacion> estacionCollectionNew = empleado.getEstacionCollection();
+            List<Programacion> programacionListOld = persistentEmpleado.getProgramacionList();
+            List<Programacion> programacionListNew = empleado.getProgramacionList();
+            List<Estacion> estacionListOld = persistentEmpleado.getEstacionList();
+            List<Estacion> estacionListNew = empleado.getEstacionList();
             List<String> illegalOrphanMessages = null;
-            for (Programacion programacionCollectionOldProgramacion : programacionCollectionOld) {
-                if (!programacionCollectionNew.contains(programacionCollectionOldProgramacion)) {
+            for (Programacion programacionListOldProgramacion : programacionListOld) {
+                if (!programacionListNew.contains(programacionListOldProgramacion)) {
                     if (illegalOrphanMessages == null) {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
-                    illegalOrphanMessages.add("You must retain Programacion " + programacionCollectionOldProgramacion + " since its empleado field is not nullable.");
+                    illegalOrphanMessages.add("You must retain Programacion " + programacionListOldProgramacion + " since its empleado field is not nullable.");
                 }
             }
-            for (Estacion estacionCollectionOldEstacion : estacionCollectionOld) {
-                if (!estacionCollectionNew.contains(estacionCollectionOldEstacion)) {
+            for (Estacion estacionListOldEstacion : estacionListOld) {
+                if (!estacionListNew.contains(estacionListOldEstacion)) {
                     if (illegalOrphanMessages == null) {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
-                    illegalOrphanMessages.add("You must retain Estacion " + estacionCollectionOldEstacion + " since its idEmpleado field is not nullable.");
+                    illegalOrphanMessages.add("You must retain Estacion " + estacionListOldEstacion + " since its idEmpleado field is not nullable.");
                 }
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            Collection<Programacion> attachedProgramacionCollectionNew = new ArrayList<Programacion>();
-            for (Programacion programacionCollectionNewProgramacionToAttach : programacionCollectionNew) {
-                programacionCollectionNewProgramacionToAttach = em.getReference(programacionCollectionNewProgramacionToAttach.getClass(), programacionCollectionNewProgramacionToAttach.getProgramacionPK());
-                attachedProgramacionCollectionNew.add(programacionCollectionNewProgramacionToAttach);
+            List<Programacion> attachedProgramacionListNew = new ArrayList<Programacion>();
+            for (Programacion programacionListNewProgramacionToAttach : programacionListNew) {
+                programacionListNewProgramacionToAttach = em.getReference(programacionListNewProgramacionToAttach.getClass(), programacionListNewProgramacionToAttach.getProgramacionPK());
+                attachedProgramacionListNew.add(programacionListNewProgramacionToAttach);
             }
-            programacionCollectionNew = attachedProgramacionCollectionNew;
-            empleado.setProgramacionCollection(programacionCollectionNew);
-            Collection<Estacion> attachedEstacionCollectionNew = new ArrayList<Estacion>();
-            for (Estacion estacionCollectionNewEstacionToAttach : estacionCollectionNew) {
-                estacionCollectionNewEstacionToAttach = em.getReference(estacionCollectionNewEstacionToAttach.getClass(), estacionCollectionNewEstacionToAttach.getNombreEstacion());
-                attachedEstacionCollectionNew.add(estacionCollectionNewEstacionToAttach);
+            programacionListNew = attachedProgramacionListNew;
+            empleado.setProgramacionList(programacionListNew);
+            List<Estacion> attachedEstacionListNew = new ArrayList<Estacion>();
+            for (Estacion estacionListNewEstacionToAttach : estacionListNew) {
+                estacionListNewEstacionToAttach = em.getReference(estacionListNewEstacionToAttach.getClass(), estacionListNewEstacionToAttach.getNombreEstacion());
+                attachedEstacionListNew.add(estacionListNewEstacionToAttach);
             }
-            estacionCollectionNew = attachedEstacionCollectionNew;
-            empleado.setEstacionCollection(estacionCollectionNew);
+            estacionListNew = attachedEstacionListNew;
+            empleado.setEstacionList(estacionListNew);
             empleado = em.merge(empleado);
-            for (Programacion programacionCollectionNewProgramacion : programacionCollectionNew) {
-                if (!programacionCollectionOld.contains(programacionCollectionNewProgramacion)) {
-                    Empleado oldEmpleadoOfProgramacionCollectionNewProgramacion = programacionCollectionNewProgramacion.getEmpleado();
-                    programacionCollectionNewProgramacion.setEmpleado(empleado);
-                    programacionCollectionNewProgramacion = em.merge(programacionCollectionNewProgramacion);
-                    if (oldEmpleadoOfProgramacionCollectionNewProgramacion != null && !oldEmpleadoOfProgramacionCollectionNewProgramacion.equals(empleado)) {
-                        oldEmpleadoOfProgramacionCollectionNewProgramacion.getProgramacionCollection().remove(programacionCollectionNewProgramacion);
-                        oldEmpleadoOfProgramacionCollectionNewProgramacion = em.merge(oldEmpleadoOfProgramacionCollectionNewProgramacion);
+            for (Programacion programacionListNewProgramacion : programacionListNew) {
+                if (!programacionListOld.contains(programacionListNewProgramacion)) {
+                    Empleado oldEmpleadoOfProgramacionListNewProgramacion = programacionListNewProgramacion.getEmpleado();
+                    programacionListNewProgramacion.setEmpleado(empleado);
+                    programacionListNewProgramacion = em.merge(programacionListNewProgramacion);
+                    if (oldEmpleadoOfProgramacionListNewProgramacion != null && !oldEmpleadoOfProgramacionListNewProgramacion.equals(empleado)) {
+                        oldEmpleadoOfProgramacionListNewProgramacion.getProgramacionList().remove(programacionListNewProgramacion);
+                        oldEmpleadoOfProgramacionListNewProgramacion = em.merge(oldEmpleadoOfProgramacionListNewProgramacion);
                     }
                 }
             }
-            for (Estacion estacionCollectionNewEstacion : estacionCollectionNew) {
-                if (!estacionCollectionOld.contains(estacionCollectionNewEstacion)) {
-                    Empleado oldIdEmpleadoOfEstacionCollectionNewEstacion = estacionCollectionNewEstacion.getIdEmpleado();
-                    estacionCollectionNewEstacion.setIdEmpleado(empleado);
-                    estacionCollectionNewEstacion = em.merge(estacionCollectionNewEstacion);
-                    if (oldIdEmpleadoOfEstacionCollectionNewEstacion != null && !oldIdEmpleadoOfEstacionCollectionNewEstacion.equals(empleado)) {
-                        oldIdEmpleadoOfEstacionCollectionNewEstacion.getEstacionCollection().remove(estacionCollectionNewEstacion);
-                        oldIdEmpleadoOfEstacionCollectionNewEstacion = em.merge(oldIdEmpleadoOfEstacionCollectionNewEstacion);
+            for (Estacion estacionListNewEstacion : estacionListNew) {
+                if (!estacionListOld.contains(estacionListNewEstacion)) {
+                    Empleado oldIdEmpleadoOfEstacionListNewEstacion = estacionListNewEstacion.getIdEmpleado();
+                    estacionListNewEstacion.setIdEmpleado(empleado);
+                    estacionListNewEstacion = em.merge(estacionListNewEstacion);
+                    if (oldIdEmpleadoOfEstacionListNewEstacion != null && !oldIdEmpleadoOfEstacionListNewEstacion.equals(empleado)) {
+                        oldIdEmpleadoOfEstacionListNewEstacion.getEstacionList().remove(estacionListNewEstacion);
+                        oldIdEmpleadoOfEstacionListNewEstacion = em.merge(oldIdEmpleadoOfEstacionListNewEstacion);
                     }
                 }
             }
@@ -188,19 +187,19 @@ public class EmpleadoJpaController implements Serializable {
                 throw new NonexistentEntityException("The empleado with id " + id + " no longer exists.", enfe);
             }
             List<String> illegalOrphanMessages = null;
-            Collection<Programacion> programacionCollectionOrphanCheck = empleado.getProgramacionCollection();
-            for (Programacion programacionCollectionOrphanCheckProgramacion : programacionCollectionOrphanCheck) {
+            List<Programacion> programacionListOrphanCheck = empleado.getProgramacionList();
+            for (Programacion programacionListOrphanCheckProgramacion : programacionListOrphanCheck) {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
-                illegalOrphanMessages.add("This Empleado (" + empleado + ") cannot be destroyed since the Programacion " + programacionCollectionOrphanCheckProgramacion + " in its programacionCollection field has a non-nullable empleado field.");
+                illegalOrphanMessages.add("This Empleado (" + empleado + ") cannot be destroyed since the Programacion " + programacionListOrphanCheckProgramacion + " in its programacionList field has a non-nullable empleado field.");
             }
-            Collection<Estacion> estacionCollectionOrphanCheck = empleado.getEstacionCollection();
-            for (Estacion estacionCollectionOrphanCheckEstacion : estacionCollectionOrphanCheck) {
+            List<Estacion> estacionListOrphanCheck = empleado.getEstacionList();
+            for (Estacion estacionListOrphanCheckEstacion : estacionListOrphanCheck) {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
-                illegalOrphanMessages.add("This Empleado (" + empleado + ") cannot be destroyed since the Estacion " + estacionCollectionOrphanCheckEstacion + " in its estacionCollection field has a non-nullable idEmpleado field.");
+                illegalOrphanMessages.add("This Empleado (" + empleado + ") cannot be destroyed since the Estacion " + estacionListOrphanCheckEstacion + " in its estacionList field has a non-nullable idEmpleado field.");
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);

@@ -5,7 +5,7 @@
 package Logica;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Dash
+ * @author Usuario
  */
 @Entity
 @Table(name = "bus")
@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Bus.findAll", query = "SELECT b FROM Bus b"),
     @NamedQuery(name = "Bus.findByMatricula", query = "SELECT b FROM Bus b WHERE b.matricula = :matricula"),
     @NamedQuery(name = "Bus.findByEstado", query = "SELECT b FROM Bus b WHERE b.estado = :estado"),
-    @NamedQuery(name = "Bus.findByAO", query = "SELECT b FROM Bus b WHERE b.aO = :aO"),
+    @NamedQuery(name = "Bus.findByAno", query = "SELECT b FROM Bus b WHERE b.ano = :ano"),
     @NamedQuery(name = "Bus.findByFabricante", query = "SELECT b FROM Bus b WHERE b.fabricante = :fabricante"),
     @NamedQuery(name = "Bus.findByCapacidad", query = "SELECT b FROM Bus b WHERE b.capacidad = :capacidad"),
     @NamedQuery(name = "Bus.findByCilindrinaje", query = "SELECT b FROM Bus b WHERE b.cilindrinaje = :cilindrinaje"),
@@ -45,8 +45,8 @@ public class Bus implements Serializable {
     @Column(name = "estado")
     private String estado;
     @Basic(optional = false)
-    @Column(name = "a\ufffdo")
-    private String aO;
+    @Column(name = "ano")
+    private String ano;
     @Basic(optional = false)
     @Column(name = "fabricante")
     private String fabricante;
@@ -63,7 +63,7 @@ public class Bus implements Serializable {
     @Column(name = "tipo_bus")
     private String tipoBus;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "bus")
-    private Collection<Programacion> programacionCollection;
+    private List<Programacion> programacionList;
 
     public Bus() {
     }
@@ -72,10 +72,10 @@ public class Bus implements Serializable {
         this.matricula = matricula;
     }
 
-    public Bus(String matricula, String estado, String aO, String fabricante, String capacidad, String cilindrinaje, String chasis, String tipoBus) {
+    public Bus(String matricula, String estado, String ano, String fabricante, String capacidad, String cilindrinaje, String chasis, String tipoBus) {
         this.matricula = matricula;
         this.estado = estado;
-        this.aO = aO;
+        this.ano = ano;
         this.fabricante = fabricante;
         this.capacidad = capacidad;
         this.cilindrinaje = cilindrinaje;
@@ -99,12 +99,12 @@ public class Bus implements Serializable {
         this.estado = estado;
     }
 
-    public String getAO() {
-        return aO;
+    public String getAno() {
+        return ano;
     }
 
-    public void setAO(String aO) {
-        this.aO = aO;
+    public void setAno(String ano) {
+        this.ano = ano;
     }
 
     public String getFabricante() {
@@ -148,12 +148,12 @@ public class Bus implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Programacion> getProgramacionCollection() {
-        return programacionCollection;
+    public List<Programacion> getProgramacionList() {
+        return programacionList;
     }
 
-    public void setProgramacionCollection(Collection<Programacion> programacionCollection) {
-        this.programacionCollection = programacionCollection;
+    public void setProgramacionList(List<Programacion> programacionList) {
+        this.programacionList = programacionList;
     }
 
     @Override

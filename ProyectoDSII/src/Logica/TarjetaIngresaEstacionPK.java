@@ -11,7 +11,7 @@ import javax.persistence.Embeddable;
 
 /**
  *
- * @author Dash
+ * @author Usuario
  */
 @Embeddable
 public class TarjetaIngresaEstacionPK implements Serializable {
@@ -23,12 +23,12 @@ public class TarjetaIngresaEstacionPK implements Serializable {
     private String ubicacionEstacion;
     @Basic(optional = false)
     @Column(name = "pin_tarjeta")
-    private int pinTarjeta;
+    private String pinTarjeta;
 
     public TarjetaIngresaEstacionPK() {
     }
 
-    public TarjetaIngresaEstacionPK(String nombreEstacion, String ubicacionEstacion, int pinTarjeta) {
+    public TarjetaIngresaEstacionPK(String nombreEstacion, String ubicacionEstacion, String pinTarjeta) {
         this.nombreEstacion = nombreEstacion;
         this.ubicacionEstacion = ubicacionEstacion;
         this.pinTarjeta = pinTarjeta;
@@ -50,11 +50,11 @@ public class TarjetaIngresaEstacionPK implements Serializable {
         this.ubicacionEstacion = ubicacionEstacion;
     }
 
-    public int getPinTarjeta() {
+    public String getPinTarjeta() {
         return pinTarjeta;
     }
 
-    public void setPinTarjeta(int pinTarjeta) {
+    public void setPinTarjeta(String pinTarjeta) {
         this.pinTarjeta = pinTarjeta;
     }
 
@@ -63,7 +63,7 @@ public class TarjetaIngresaEstacionPK implements Serializable {
         int hash = 0;
         hash += (nombreEstacion != null ? nombreEstacion.hashCode() : 0);
         hash += (ubicacionEstacion != null ? ubicacionEstacion.hashCode() : 0);
-        hash += (int) pinTarjeta;
+        hash += (pinTarjeta != null ? pinTarjeta.hashCode() : 0);
         return hash;
     }
 
@@ -80,7 +80,7 @@ public class TarjetaIngresaEstacionPK implements Serializable {
         if ((this.ubicacionEstacion == null && other.ubicacionEstacion != null) || (this.ubicacionEstacion != null && !this.ubicacionEstacion.equals(other.ubicacionEstacion))) {
             return false;
         }
-        if (this.pinTarjeta != other.pinTarjeta) {
+        if ((this.pinTarjeta == null && other.pinTarjeta != null) || (this.pinTarjeta != null && !this.pinTarjeta.equals(other.pinTarjeta))) {
             return false;
         }
         return true;

@@ -16,17 +16,16 @@ import Logica.Empleado;
 import Logica.Estacion;
 import Logica.Ruta;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 import Logica.TarjetaIngresaEstacion;
 import Logica.Tarjeta;
 import Logica.Solicitud;
-import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author Dash
+ * @author Usuario
  */
 public class EstacionJpaController implements Serializable {
 
@@ -40,20 +39,20 @@ public class EstacionJpaController implements Serializable {
     }
 
     public void create(Estacion estacion) throws PreexistingEntityException, Exception {
-        if (estacion.getRutaCollection() == null) {
-            estacion.setRutaCollection(new ArrayList<Ruta>());
+        if (estacion.getRutaList() == null) {
+            estacion.setRutaList(new ArrayList<Ruta>());
         }
-        if (estacion.getTarjetaIngresaEstacionCollection() == null) {
-            estacion.setTarjetaIngresaEstacionCollection(new ArrayList<TarjetaIngresaEstacion>());
+        if (estacion.getTarjetaIngresaEstacionList() == null) {
+            estacion.setTarjetaIngresaEstacionList(new ArrayList<TarjetaIngresaEstacion>());
         }
-        if (estacion.getTarjetaIngresaEstacionCollection1() == null) {
-            estacion.setTarjetaIngresaEstacionCollection1(new ArrayList<TarjetaIngresaEstacion>());
+        if (estacion.getTarjetaIngresaEstacionList1() == null) {
+            estacion.setTarjetaIngresaEstacionList1(new ArrayList<TarjetaIngresaEstacion>());
         }
-        if (estacion.getTarjetaCollection() == null) {
-            estacion.setTarjetaCollection(new ArrayList<Tarjeta>());
+        if (estacion.getTarjetaList() == null) {
+            estacion.setTarjetaList(new ArrayList<Tarjeta>());
         }
-        if (estacion.getSolicitudCollection() == null) {
-            estacion.setSolicitudCollection(new ArrayList<Solicitud>());
+        if (estacion.getSolicitudList() == null) {
+            estacion.setSolicitudList(new ArrayList<Solicitud>());
         }
         EntityManager em = null;
         try {
@@ -64,79 +63,79 @@ public class EstacionJpaController implements Serializable {
                 idEmpleado = em.getReference(idEmpleado.getClass(), idEmpleado.getId());
                 estacion.setIdEmpleado(idEmpleado);
             }
-            Collection<Ruta> attachedRutaCollection = new ArrayList<Ruta>();
-            for (Ruta rutaCollectionRutaToAttach : estacion.getRutaCollection()) {
-                rutaCollectionRutaToAttach = em.getReference(rutaCollectionRutaToAttach.getClass(), rutaCollectionRutaToAttach.getNombreRuta());
-                attachedRutaCollection.add(rutaCollectionRutaToAttach);
+            List<Ruta> attachedRutaList = new ArrayList<Ruta>();
+            for (Ruta rutaListRutaToAttach : estacion.getRutaList()) {
+                rutaListRutaToAttach = em.getReference(rutaListRutaToAttach.getClass(), rutaListRutaToAttach.getNombreRuta());
+                attachedRutaList.add(rutaListRutaToAttach);
             }
-            estacion.setRutaCollection(attachedRutaCollection);
-            Collection<TarjetaIngresaEstacion> attachedTarjetaIngresaEstacionCollection = new ArrayList<TarjetaIngresaEstacion>();
-            for (TarjetaIngresaEstacion tarjetaIngresaEstacionCollectionTarjetaIngresaEstacionToAttach : estacion.getTarjetaIngresaEstacionCollection()) {
-                tarjetaIngresaEstacionCollectionTarjetaIngresaEstacionToAttach = em.getReference(tarjetaIngresaEstacionCollectionTarjetaIngresaEstacionToAttach.getClass(), tarjetaIngresaEstacionCollectionTarjetaIngresaEstacionToAttach.getTarjetaIngresaEstacionPK());
-                attachedTarjetaIngresaEstacionCollection.add(tarjetaIngresaEstacionCollectionTarjetaIngresaEstacionToAttach);
+            estacion.setRutaList(attachedRutaList);
+            List<TarjetaIngresaEstacion> attachedTarjetaIngresaEstacionList = new ArrayList<TarjetaIngresaEstacion>();
+            for (TarjetaIngresaEstacion tarjetaIngresaEstacionListTarjetaIngresaEstacionToAttach : estacion.getTarjetaIngresaEstacionList()) {
+                tarjetaIngresaEstacionListTarjetaIngresaEstacionToAttach = em.getReference(tarjetaIngresaEstacionListTarjetaIngresaEstacionToAttach.getClass(), tarjetaIngresaEstacionListTarjetaIngresaEstacionToAttach.getTarjetaIngresaEstacionPK());
+                attachedTarjetaIngresaEstacionList.add(tarjetaIngresaEstacionListTarjetaIngresaEstacionToAttach);
             }
-            estacion.setTarjetaIngresaEstacionCollection(attachedTarjetaIngresaEstacionCollection);
-            Collection<TarjetaIngresaEstacion> attachedTarjetaIngresaEstacionCollection1 = new ArrayList<TarjetaIngresaEstacion>();
-            for (TarjetaIngresaEstacion tarjetaIngresaEstacionCollection1TarjetaIngresaEstacionToAttach : estacion.getTarjetaIngresaEstacionCollection1()) {
-                tarjetaIngresaEstacionCollection1TarjetaIngresaEstacionToAttach = em.getReference(tarjetaIngresaEstacionCollection1TarjetaIngresaEstacionToAttach.getClass(), tarjetaIngresaEstacionCollection1TarjetaIngresaEstacionToAttach.getTarjetaIngresaEstacionPK());
-                attachedTarjetaIngresaEstacionCollection1.add(tarjetaIngresaEstacionCollection1TarjetaIngresaEstacionToAttach);
+            estacion.setTarjetaIngresaEstacionList(attachedTarjetaIngresaEstacionList);
+            List<TarjetaIngresaEstacion> attachedTarjetaIngresaEstacionList1 = new ArrayList<TarjetaIngresaEstacion>();
+            for (TarjetaIngresaEstacion tarjetaIngresaEstacionList1TarjetaIngresaEstacionToAttach : estacion.getTarjetaIngresaEstacionList1()) {
+                tarjetaIngresaEstacionList1TarjetaIngresaEstacionToAttach = em.getReference(tarjetaIngresaEstacionList1TarjetaIngresaEstacionToAttach.getClass(), tarjetaIngresaEstacionList1TarjetaIngresaEstacionToAttach.getTarjetaIngresaEstacionPK());
+                attachedTarjetaIngresaEstacionList1.add(tarjetaIngresaEstacionList1TarjetaIngresaEstacionToAttach);
             }
-            estacion.setTarjetaIngresaEstacionCollection1(attachedTarjetaIngresaEstacionCollection1);
-            Collection<Tarjeta> attachedTarjetaCollection = new ArrayList<Tarjeta>();
-            for (Tarjeta tarjetaCollectionTarjetaToAttach : estacion.getTarjetaCollection()) {
-                tarjetaCollectionTarjetaToAttach = em.getReference(tarjetaCollectionTarjetaToAttach.getClass(), tarjetaCollectionTarjetaToAttach.getPin());
-                attachedTarjetaCollection.add(tarjetaCollectionTarjetaToAttach);
+            estacion.setTarjetaIngresaEstacionList1(attachedTarjetaIngresaEstacionList1);
+            List<Tarjeta> attachedTarjetaList = new ArrayList<Tarjeta>();
+            for (Tarjeta tarjetaListTarjetaToAttach : estacion.getTarjetaList()) {
+                tarjetaListTarjetaToAttach = em.getReference(tarjetaListTarjetaToAttach.getClass(), tarjetaListTarjetaToAttach.getPin());
+                attachedTarjetaList.add(tarjetaListTarjetaToAttach);
             }
-            estacion.setTarjetaCollection(attachedTarjetaCollection);
-            Collection<Solicitud> attachedSolicitudCollection = new ArrayList<Solicitud>();
-            for (Solicitud solicitudCollectionSolicitudToAttach : estacion.getSolicitudCollection()) {
-                solicitudCollectionSolicitudToAttach = em.getReference(solicitudCollectionSolicitudToAttach.getClass(), solicitudCollectionSolicitudToAttach.getTicket());
-                attachedSolicitudCollection.add(solicitudCollectionSolicitudToAttach);
+            estacion.setTarjetaList(attachedTarjetaList);
+            List<Solicitud> attachedSolicitudList = new ArrayList<Solicitud>();
+            for (Solicitud solicitudListSolicitudToAttach : estacion.getSolicitudList()) {
+                solicitudListSolicitudToAttach = em.getReference(solicitudListSolicitudToAttach.getClass(), solicitudListSolicitudToAttach.getTicket());
+                attachedSolicitudList.add(solicitudListSolicitudToAttach);
             }
-            estacion.setSolicitudCollection(attachedSolicitudCollection);
+            estacion.setSolicitudList(attachedSolicitudList);
             em.persist(estacion);
             if (idEmpleado != null) {
-                idEmpleado.getEstacionCollection().add(estacion);
+                idEmpleado.getEstacionList().add(estacion);
                 idEmpleado = em.merge(idEmpleado);
             }
-            for (Ruta rutaCollectionRuta : estacion.getRutaCollection()) {
-                rutaCollectionRuta.getEstacionCollection().add(estacion);
-                rutaCollectionRuta = em.merge(rutaCollectionRuta);
+            for (Ruta rutaListRuta : estacion.getRutaList()) {
+                rutaListRuta.getEstacionList().add(estacion);
+                rutaListRuta = em.merge(rutaListRuta);
             }
-            for (TarjetaIngresaEstacion tarjetaIngresaEstacionCollectionTarjetaIngresaEstacion : estacion.getTarjetaIngresaEstacionCollection()) {
-                Estacion oldEstacionOfTarjetaIngresaEstacionCollectionTarjetaIngresaEstacion = tarjetaIngresaEstacionCollectionTarjetaIngresaEstacion.getEstacion();
-                tarjetaIngresaEstacionCollectionTarjetaIngresaEstacion.setEstacion(estacion);
-                tarjetaIngresaEstacionCollectionTarjetaIngresaEstacion = em.merge(tarjetaIngresaEstacionCollectionTarjetaIngresaEstacion);
-                if (oldEstacionOfTarjetaIngresaEstacionCollectionTarjetaIngresaEstacion != null) {
-                    oldEstacionOfTarjetaIngresaEstacionCollectionTarjetaIngresaEstacion.getTarjetaIngresaEstacionCollection().remove(tarjetaIngresaEstacionCollectionTarjetaIngresaEstacion);
-                    oldEstacionOfTarjetaIngresaEstacionCollectionTarjetaIngresaEstacion = em.merge(oldEstacionOfTarjetaIngresaEstacionCollectionTarjetaIngresaEstacion);
+            for (TarjetaIngresaEstacion tarjetaIngresaEstacionListTarjetaIngresaEstacion : estacion.getTarjetaIngresaEstacionList()) {
+                Estacion oldEstacionOfTarjetaIngresaEstacionListTarjetaIngresaEstacion = tarjetaIngresaEstacionListTarjetaIngresaEstacion.getEstacion();
+                tarjetaIngresaEstacionListTarjetaIngresaEstacion.setEstacion(estacion);
+                tarjetaIngresaEstacionListTarjetaIngresaEstacion = em.merge(tarjetaIngresaEstacionListTarjetaIngresaEstacion);
+                if (oldEstacionOfTarjetaIngresaEstacionListTarjetaIngresaEstacion != null) {
+                    oldEstacionOfTarjetaIngresaEstacionListTarjetaIngresaEstacion.getTarjetaIngresaEstacionList().remove(tarjetaIngresaEstacionListTarjetaIngresaEstacion);
+                    oldEstacionOfTarjetaIngresaEstacionListTarjetaIngresaEstacion = em.merge(oldEstacionOfTarjetaIngresaEstacionListTarjetaIngresaEstacion);
                 }
             }
-            for (TarjetaIngresaEstacion tarjetaIngresaEstacionCollection1TarjetaIngresaEstacion : estacion.getTarjetaIngresaEstacionCollection1()) {
-                Estacion oldEstacion1OfTarjetaIngresaEstacionCollection1TarjetaIngresaEstacion = tarjetaIngresaEstacionCollection1TarjetaIngresaEstacion.getEstacion1();
-                tarjetaIngresaEstacionCollection1TarjetaIngresaEstacion.setEstacion1(estacion);
-                tarjetaIngresaEstacionCollection1TarjetaIngresaEstacion = em.merge(tarjetaIngresaEstacionCollection1TarjetaIngresaEstacion);
-                if (oldEstacion1OfTarjetaIngresaEstacionCollection1TarjetaIngresaEstacion != null) {
-                    oldEstacion1OfTarjetaIngresaEstacionCollection1TarjetaIngresaEstacion.getTarjetaIngresaEstacionCollection1().remove(tarjetaIngresaEstacionCollection1TarjetaIngresaEstacion);
-                    oldEstacion1OfTarjetaIngresaEstacionCollection1TarjetaIngresaEstacion = em.merge(oldEstacion1OfTarjetaIngresaEstacionCollection1TarjetaIngresaEstacion);
+            for (TarjetaIngresaEstacion tarjetaIngresaEstacionList1TarjetaIngresaEstacion : estacion.getTarjetaIngresaEstacionList1()) {
+                Estacion oldEstacion1OfTarjetaIngresaEstacionList1TarjetaIngresaEstacion = tarjetaIngresaEstacionList1TarjetaIngresaEstacion.getEstacion1();
+                tarjetaIngresaEstacionList1TarjetaIngresaEstacion.setEstacion1(estacion);
+                tarjetaIngresaEstacionList1TarjetaIngresaEstacion = em.merge(tarjetaIngresaEstacionList1TarjetaIngresaEstacion);
+                if (oldEstacion1OfTarjetaIngresaEstacionList1TarjetaIngresaEstacion != null) {
+                    oldEstacion1OfTarjetaIngresaEstacionList1TarjetaIngresaEstacion.getTarjetaIngresaEstacionList1().remove(tarjetaIngresaEstacionList1TarjetaIngresaEstacion);
+                    oldEstacion1OfTarjetaIngresaEstacionList1TarjetaIngresaEstacion = em.merge(oldEstacion1OfTarjetaIngresaEstacionList1TarjetaIngresaEstacion);
                 }
             }
-            for (Tarjeta tarjetaCollectionTarjeta : estacion.getTarjetaCollection()) {
-                Estacion oldNombreEstacionOfTarjetaCollectionTarjeta = tarjetaCollectionTarjeta.getNombreEstacion();
-                tarjetaCollectionTarjeta.setNombreEstacion(estacion);
-                tarjetaCollectionTarjeta = em.merge(tarjetaCollectionTarjeta);
-                if (oldNombreEstacionOfTarjetaCollectionTarjeta != null) {
-                    oldNombreEstacionOfTarjetaCollectionTarjeta.getTarjetaCollection().remove(tarjetaCollectionTarjeta);
-                    oldNombreEstacionOfTarjetaCollectionTarjeta = em.merge(oldNombreEstacionOfTarjetaCollectionTarjeta);
+            for (Tarjeta tarjetaListTarjeta : estacion.getTarjetaList()) {
+                Estacion oldNombreEstacionOfTarjetaListTarjeta = tarjetaListTarjeta.getNombreEstacion();
+                tarjetaListTarjeta.setNombreEstacion(estacion);
+                tarjetaListTarjeta = em.merge(tarjetaListTarjeta);
+                if (oldNombreEstacionOfTarjetaListTarjeta != null) {
+                    oldNombreEstacionOfTarjetaListTarjeta.getTarjetaList().remove(tarjetaListTarjeta);
+                    oldNombreEstacionOfTarjetaListTarjeta = em.merge(oldNombreEstacionOfTarjetaListTarjeta);
                 }
             }
-            for (Solicitud solicitudCollectionSolicitud : estacion.getSolicitudCollection()) {
-                Estacion oldNombreEstacionOfSolicitudCollectionSolicitud = solicitudCollectionSolicitud.getNombreEstacion();
-                solicitudCollectionSolicitud.setNombreEstacion(estacion);
-                solicitudCollectionSolicitud = em.merge(solicitudCollectionSolicitud);
-                if (oldNombreEstacionOfSolicitudCollectionSolicitud != null) {
-                    oldNombreEstacionOfSolicitudCollectionSolicitud.getSolicitudCollection().remove(solicitudCollectionSolicitud);
-                    oldNombreEstacionOfSolicitudCollectionSolicitud = em.merge(oldNombreEstacionOfSolicitudCollectionSolicitud);
+            for (Solicitud solicitudListSolicitud : estacion.getSolicitudList()) {
+                Estacion oldNombreEstacionOfSolicitudListSolicitud = solicitudListSolicitud.getNombreEstacion();
+                solicitudListSolicitud.setNombreEstacion(estacion);
+                solicitudListSolicitud = em.merge(solicitudListSolicitud);
+                if (oldNombreEstacionOfSolicitudListSolicitud != null) {
+                    oldNombreEstacionOfSolicitudListSolicitud.getSolicitudList().remove(solicitudListSolicitud);
+                    oldNombreEstacionOfSolicitudListSolicitud = em.merge(oldNombreEstacionOfSolicitudListSolicitud);
                 }
             }
             em.getTransaction().commit();
@@ -160,47 +159,47 @@ public class EstacionJpaController implements Serializable {
             Estacion persistentEstacion = em.find(Estacion.class, estacion.getNombreEstacion());
             Empleado idEmpleadoOld = persistentEstacion.getIdEmpleado();
             Empleado idEmpleadoNew = estacion.getIdEmpleado();
-            Collection<Ruta> rutaCollectionOld = persistentEstacion.getRutaCollection();
-            Collection<Ruta> rutaCollectionNew = estacion.getRutaCollection();
-            Collection<TarjetaIngresaEstacion> tarjetaIngresaEstacionCollectionOld = persistentEstacion.getTarjetaIngresaEstacionCollection();
-            Collection<TarjetaIngresaEstacion> tarjetaIngresaEstacionCollectionNew = estacion.getTarjetaIngresaEstacionCollection();
-            Collection<TarjetaIngresaEstacion> tarjetaIngresaEstacionCollection1Old = persistentEstacion.getTarjetaIngresaEstacionCollection1();
-            Collection<TarjetaIngresaEstacion> tarjetaIngresaEstacionCollection1New = estacion.getTarjetaIngresaEstacionCollection1();
-            Collection<Tarjeta> tarjetaCollectionOld = persistentEstacion.getTarjetaCollection();
-            Collection<Tarjeta> tarjetaCollectionNew = estacion.getTarjetaCollection();
-            Collection<Solicitud> solicitudCollectionOld = persistentEstacion.getSolicitudCollection();
-            Collection<Solicitud> solicitudCollectionNew = estacion.getSolicitudCollection();
+            List<Ruta> rutaListOld = persistentEstacion.getRutaList();
+            List<Ruta> rutaListNew = estacion.getRutaList();
+            List<TarjetaIngresaEstacion> tarjetaIngresaEstacionListOld = persistentEstacion.getTarjetaIngresaEstacionList();
+            List<TarjetaIngresaEstacion> tarjetaIngresaEstacionListNew = estacion.getTarjetaIngresaEstacionList();
+            List<TarjetaIngresaEstacion> tarjetaIngresaEstacionList1Old = persistentEstacion.getTarjetaIngresaEstacionList1();
+            List<TarjetaIngresaEstacion> tarjetaIngresaEstacionList1New = estacion.getTarjetaIngresaEstacionList1();
+            List<Tarjeta> tarjetaListOld = persistentEstacion.getTarjetaList();
+            List<Tarjeta> tarjetaListNew = estacion.getTarjetaList();
+            List<Solicitud> solicitudListOld = persistentEstacion.getSolicitudList();
+            List<Solicitud> solicitudListNew = estacion.getSolicitudList();
             List<String> illegalOrphanMessages = null;
-            for (TarjetaIngresaEstacion tarjetaIngresaEstacionCollectionOldTarjetaIngresaEstacion : tarjetaIngresaEstacionCollectionOld) {
-                if (!tarjetaIngresaEstacionCollectionNew.contains(tarjetaIngresaEstacionCollectionOldTarjetaIngresaEstacion)) {
+            for (TarjetaIngresaEstacion tarjetaIngresaEstacionListOldTarjetaIngresaEstacion : tarjetaIngresaEstacionListOld) {
+                if (!tarjetaIngresaEstacionListNew.contains(tarjetaIngresaEstacionListOldTarjetaIngresaEstacion)) {
                     if (illegalOrphanMessages == null) {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
-                    illegalOrphanMessages.add("You must retain TarjetaIngresaEstacion " + tarjetaIngresaEstacionCollectionOldTarjetaIngresaEstacion + " since its estacion field is not nullable.");
+                    illegalOrphanMessages.add("You must retain TarjetaIngresaEstacion " + tarjetaIngresaEstacionListOldTarjetaIngresaEstacion + " since its estacion field is not nullable.");
                 }
             }
-            for (TarjetaIngresaEstacion tarjetaIngresaEstacionCollection1OldTarjetaIngresaEstacion : tarjetaIngresaEstacionCollection1Old) {
-                if (!tarjetaIngresaEstacionCollection1New.contains(tarjetaIngresaEstacionCollection1OldTarjetaIngresaEstacion)) {
+            for (TarjetaIngresaEstacion tarjetaIngresaEstacionList1OldTarjetaIngresaEstacion : tarjetaIngresaEstacionList1Old) {
+                if (!tarjetaIngresaEstacionList1New.contains(tarjetaIngresaEstacionList1OldTarjetaIngresaEstacion)) {
                     if (illegalOrphanMessages == null) {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
-                    illegalOrphanMessages.add("You must retain TarjetaIngresaEstacion " + tarjetaIngresaEstacionCollection1OldTarjetaIngresaEstacion + " since its estacion1 field is not nullable.");
+                    illegalOrphanMessages.add("You must retain TarjetaIngresaEstacion " + tarjetaIngresaEstacionList1OldTarjetaIngresaEstacion + " since its estacion1 field is not nullable.");
                 }
             }
-            for (Tarjeta tarjetaCollectionOldTarjeta : tarjetaCollectionOld) {
-                if (!tarjetaCollectionNew.contains(tarjetaCollectionOldTarjeta)) {
+            for (Tarjeta tarjetaListOldTarjeta : tarjetaListOld) {
+                if (!tarjetaListNew.contains(tarjetaListOldTarjeta)) {
                     if (illegalOrphanMessages == null) {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
-                    illegalOrphanMessages.add("You must retain Tarjeta " + tarjetaCollectionOldTarjeta + " since its nombreEstacion field is not nullable.");
+                    illegalOrphanMessages.add("You must retain Tarjeta " + tarjetaListOldTarjeta + " since its nombreEstacion field is not nullable.");
                 }
             }
-            for (Solicitud solicitudCollectionOldSolicitud : solicitudCollectionOld) {
-                if (!solicitudCollectionNew.contains(solicitudCollectionOldSolicitud)) {
+            for (Solicitud solicitudListOldSolicitud : solicitudListOld) {
+                if (!solicitudListNew.contains(solicitudListOldSolicitud)) {
                     if (illegalOrphanMessages == null) {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
-                    illegalOrphanMessages.add("You must retain Solicitud " + solicitudCollectionOldSolicitud + " since its nombreEstacion field is not nullable.");
+                    illegalOrphanMessages.add("You must retain Solicitud " + solicitudListOldSolicitud + " since its nombreEstacion field is not nullable.");
                 }
             }
             if (illegalOrphanMessages != null) {
@@ -210,103 +209,103 @@ public class EstacionJpaController implements Serializable {
                 idEmpleadoNew = em.getReference(idEmpleadoNew.getClass(), idEmpleadoNew.getId());
                 estacion.setIdEmpleado(idEmpleadoNew);
             }
-            Collection<Ruta> attachedRutaCollectionNew = new ArrayList<Ruta>();
-            for (Ruta rutaCollectionNewRutaToAttach : rutaCollectionNew) {
-                rutaCollectionNewRutaToAttach = em.getReference(rutaCollectionNewRutaToAttach.getClass(), rutaCollectionNewRutaToAttach.getNombreRuta());
-                attachedRutaCollectionNew.add(rutaCollectionNewRutaToAttach);
+            List<Ruta> attachedRutaListNew = new ArrayList<Ruta>();
+            for (Ruta rutaListNewRutaToAttach : rutaListNew) {
+                rutaListNewRutaToAttach = em.getReference(rutaListNewRutaToAttach.getClass(), rutaListNewRutaToAttach.getNombreRuta());
+                attachedRutaListNew.add(rutaListNewRutaToAttach);
             }
-            rutaCollectionNew = attachedRutaCollectionNew;
-            estacion.setRutaCollection(rutaCollectionNew);
-            Collection<TarjetaIngresaEstacion> attachedTarjetaIngresaEstacionCollectionNew = new ArrayList<TarjetaIngresaEstacion>();
-            for (TarjetaIngresaEstacion tarjetaIngresaEstacionCollectionNewTarjetaIngresaEstacionToAttach : tarjetaIngresaEstacionCollectionNew) {
-                tarjetaIngresaEstacionCollectionNewTarjetaIngresaEstacionToAttach = em.getReference(tarjetaIngresaEstacionCollectionNewTarjetaIngresaEstacionToAttach.getClass(), tarjetaIngresaEstacionCollectionNewTarjetaIngresaEstacionToAttach.getTarjetaIngresaEstacionPK());
-                attachedTarjetaIngresaEstacionCollectionNew.add(tarjetaIngresaEstacionCollectionNewTarjetaIngresaEstacionToAttach);
+            rutaListNew = attachedRutaListNew;
+            estacion.setRutaList(rutaListNew);
+            List<TarjetaIngresaEstacion> attachedTarjetaIngresaEstacionListNew = new ArrayList<TarjetaIngresaEstacion>();
+            for (TarjetaIngresaEstacion tarjetaIngresaEstacionListNewTarjetaIngresaEstacionToAttach : tarjetaIngresaEstacionListNew) {
+                tarjetaIngresaEstacionListNewTarjetaIngresaEstacionToAttach = em.getReference(tarjetaIngresaEstacionListNewTarjetaIngresaEstacionToAttach.getClass(), tarjetaIngresaEstacionListNewTarjetaIngresaEstacionToAttach.getTarjetaIngresaEstacionPK());
+                attachedTarjetaIngresaEstacionListNew.add(tarjetaIngresaEstacionListNewTarjetaIngresaEstacionToAttach);
             }
-            tarjetaIngresaEstacionCollectionNew = attachedTarjetaIngresaEstacionCollectionNew;
-            estacion.setTarjetaIngresaEstacionCollection(tarjetaIngresaEstacionCollectionNew);
-            Collection<TarjetaIngresaEstacion> attachedTarjetaIngresaEstacionCollection1New = new ArrayList<TarjetaIngresaEstacion>();
-            for (TarjetaIngresaEstacion tarjetaIngresaEstacionCollection1NewTarjetaIngresaEstacionToAttach : tarjetaIngresaEstacionCollection1New) {
-                tarjetaIngresaEstacionCollection1NewTarjetaIngresaEstacionToAttach = em.getReference(tarjetaIngresaEstacionCollection1NewTarjetaIngresaEstacionToAttach.getClass(), tarjetaIngresaEstacionCollection1NewTarjetaIngresaEstacionToAttach.getTarjetaIngresaEstacionPK());
-                attachedTarjetaIngresaEstacionCollection1New.add(tarjetaIngresaEstacionCollection1NewTarjetaIngresaEstacionToAttach);
+            tarjetaIngresaEstacionListNew = attachedTarjetaIngresaEstacionListNew;
+            estacion.setTarjetaIngresaEstacionList(tarjetaIngresaEstacionListNew);
+            List<TarjetaIngresaEstacion> attachedTarjetaIngresaEstacionList1New = new ArrayList<TarjetaIngresaEstacion>();
+            for (TarjetaIngresaEstacion tarjetaIngresaEstacionList1NewTarjetaIngresaEstacionToAttach : tarjetaIngresaEstacionList1New) {
+                tarjetaIngresaEstacionList1NewTarjetaIngresaEstacionToAttach = em.getReference(tarjetaIngresaEstacionList1NewTarjetaIngresaEstacionToAttach.getClass(), tarjetaIngresaEstacionList1NewTarjetaIngresaEstacionToAttach.getTarjetaIngresaEstacionPK());
+                attachedTarjetaIngresaEstacionList1New.add(tarjetaIngresaEstacionList1NewTarjetaIngresaEstacionToAttach);
             }
-            tarjetaIngresaEstacionCollection1New = attachedTarjetaIngresaEstacionCollection1New;
-            estacion.setTarjetaIngresaEstacionCollection1(tarjetaIngresaEstacionCollection1New);
-            Collection<Tarjeta> attachedTarjetaCollectionNew = new ArrayList<Tarjeta>();
-            for (Tarjeta tarjetaCollectionNewTarjetaToAttach : tarjetaCollectionNew) {
-                tarjetaCollectionNewTarjetaToAttach = em.getReference(tarjetaCollectionNewTarjetaToAttach.getClass(), tarjetaCollectionNewTarjetaToAttach.getPin());
-                attachedTarjetaCollectionNew.add(tarjetaCollectionNewTarjetaToAttach);
+            tarjetaIngresaEstacionList1New = attachedTarjetaIngresaEstacionList1New;
+            estacion.setTarjetaIngresaEstacionList1(tarjetaIngresaEstacionList1New);
+            List<Tarjeta> attachedTarjetaListNew = new ArrayList<Tarjeta>();
+            for (Tarjeta tarjetaListNewTarjetaToAttach : tarjetaListNew) {
+                tarjetaListNewTarjetaToAttach = em.getReference(tarjetaListNewTarjetaToAttach.getClass(), tarjetaListNewTarjetaToAttach.getPin());
+                attachedTarjetaListNew.add(tarjetaListNewTarjetaToAttach);
             }
-            tarjetaCollectionNew = attachedTarjetaCollectionNew;
-            estacion.setTarjetaCollection(tarjetaCollectionNew);
-            Collection<Solicitud> attachedSolicitudCollectionNew = new ArrayList<Solicitud>();
-            for (Solicitud solicitudCollectionNewSolicitudToAttach : solicitudCollectionNew) {
-                solicitudCollectionNewSolicitudToAttach = em.getReference(solicitudCollectionNewSolicitudToAttach.getClass(), solicitudCollectionNewSolicitudToAttach.getTicket());
-                attachedSolicitudCollectionNew.add(solicitudCollectionNewSolicitudToAttach);
+            tarjetaListNew = attachedTarjetaListNew;
+            estacion.setTarjetaList(tarjetaListNew);
+            List<Solicitud> attachedSolicitudListNew = new ArrayList<Solicitud>();
+            for (Solicitud solicitudListNewSolicitudToAttach : solicitudListNew) {
+                solicitudListNewSolicitudToAttach = em.getReference(solicitudListNewSolicitudToAttach.getClass(), solicitudListNewSolicitudToAttach.getTicket());
+                attachedSolicitudListNew.add(solicitudListNewSolicitudToAttach);
             }
-            solicitudCollectionNew = attachedSolicitudCollectionNew;
-            estacion.setSolicitudCollection(solicitudCollectionNew);
+            solicitudListNew = attachedSolicitudListNew;
+            estacion.setSolicitudList(solicitudListNew);
             estacion = em.merge(estacion);
             if (idEmpleadoOld != null && !idEmpleadoOld.equals(idEmpleadoNew)) {
-                idEmpleadoOld.getEstacionCollection().remove(estacion);
+                idEmpleadoOld.getEstacionList().remove(estacion);
                 idEmpleadoOld = em.merge(idEmpleadoOld);
             }
             if (idEmpleadoNew != null && !idEmpleadoNew.equals(idEmpleadoOld)) {
-                idEmpleadoNew.getEstacionCollection().add(estacion);
+                idEmpleadoNew.getEstacionList().add(estacion);
                 idEmpleadoNew = em.merge(idEmpleadoNew);
             }
-            for (Ruta rutaCollectionOldRuta : rutaCollectionOld) {
-                if (!rutaCollectionNew.contains(rutaCollectionOldRuta)) {
-                    rutaCollectionOldRuta.getEstacionCollection().remove(estacion);
-                    rutaCollectionOldRuta = em.merge(rutaCollectionOldRuta);
+            for (Ruta rutaListOldRuta : rutaListOld) {
+                if (!rutaListNew.contains(rutaListOldRuta)) {
+                    rutaListOldRuta.getEstacionList().remove(estacion);
+                    rutaListOldRuta = em.merge(rutaListOldRuta);
                 }
             }
-            for (Ruta rutaCollectionNewRuta : rutaCollectionNew) {
-                if (!rutaCollectionOld.contains(rutaCollectionNewRuta)) {
-                    rutaCollectionNewRuta.getEstacionCollection().add(estacion);
-                    rutaCollectionNewRuta = em.merge(rutaCollectionNewRuta);
+            for (Ruta rutaListNewRuta : rutaListNew) {
+                if (!rutaListOld.contains(rutaListNewRuta)) {
+                    rutaListNewRuta.getEstacionList().add(estacion);
+                    rutaListNewRuta = em.merge(rutaListNewRuta);
                 }
             }
-            for (TarjetaIngresaEstacion tarjetaIngresaEstacionCollectionNewTarjetaIngresaEstacion : tarjetaIngresaEstacionCollectionNew) {
-                if (!tarjetaIngresaEstacionCollectionOld.contains(tarjetaIngresaEstacionCollectionNewTarjetaIngresaEstacion)) {
-                    Estacion oldEstacionOfTarjetaIngresaEstacionCollectionNewTarjetaIngresaEstacion = tarjetaIngresaEstacionCollectionNewTarjetaIngresaEstacion.getEstacion();
-                    tarjetaIngresaEstacionCollectionNewTarjetaIngresaEstacion.setEstacion(estacion);
-                    tarjetaIngresaEstacionCollectionNewTarjetaIngresaEstacion = em.merge(tarjetaIngresaEstacionCollectionNewTarjetaIngresaEstacion);
-                    if (oldEstacionOfTarjetaIngresaEstacionCollectionNewTarjetaIngresaEstacion != null && !oldEstacionOfTarjetaIngresaEstacionCollectionNewTarjetaIngresaEstacion.equals(estacion)) {
-                        oldEstacionOfTarjetaIngresaEstacionCollectionNewTarjetaIngresaEstacion.getTarjetaIngresaEstacionCollection().remove(tarjetaIngresaEstacionCollectionNewTarjetaIngresaEstacion);
-                        oldEstacionOfTarjetaIngresaEstacionCollectionNewTarjetaIngresaEstacion = em.merge(oldEstacionOfTarjetaIngresaEstacionCollectionNewTarjetaIngresaEstacion);
+            for (TarjetaIngresaEstacion tarjetaIngresaEstacionListNewTarjetaIngresaEstacion : tarjetaIngresaEstacionListNew) {
+                if (!tarjetaIngresaEstacionListOld.contains(tarjetaIngresaEstacionListNewTarjetaIngresaEstacion)) {
+                    Estacion oldEstacionOfTarjetaIngresaEstacionListNewTarjetaIngresaEstacion = tarjetaIngresaEstacionListNewTarjetaIngresaEstacion.getEstacion();
+                    tarjetaIngresaEstacionListNewTarjetaIngresaEstacion.setEstacion(estacion);
+                    tarjetaIngresaEstacionListNewTarjetaIngresaEstacion = em.merge(tarjetaIngresaEstacionListNewTarjetaIngresaEstacion);
+                    if (oldEstacionOfTarjetaIngresaEstacionListNewTarjetaIngresaEstacion != null && !oldEstacionOfTarjetaIngresaEstacionListNewTarjetaIngresaEstacion.equals(estacion)) {
+                        oldEstacionOfTarjetaIngresaEstacionListNewTarjetaIngresaEstacion.getTarjetaIngresaEstacionList().remove(tarjetaIngresaEstacionListNewTarjetaIngresaEstacion);
+                        oldEstacionOfTarjetaIngresaEstacionListNewTarjetaIngresaEstacion = em.merge(oldEstacionOfTarjetaIngresaEstacionListNewTarjetaIngresaEstacion);
                     }
                 }
             }
-            for (TarjetaIngresaEstacion tarjetaIngresaEstacionCollection1NewTarjetaIngresaEstacion : tarjetaIngresaEstacionCollection1New) {
-                if (!tarjetaIngresaEstacionCollection1Old.contains(tarjetaIngresaEstacionCollection1NewTarjetaIngresaEstacion)) {
-                    Estacion oldEstacion1OfTarjetaIngresaEstacionCollection1NewTarjetaIngresaEstacion = tarjetaIngresaEstacionCollection1NewTarjetaIngresaEstacion.getEstacion1();
-                    tarjetaIngresaEstacionCollection1NewTarjetaIngresaEstacion.setEstacion1(estacion);
-                    tarjetaIngresaEstacionCollection1NewTarjetaIngresaEstacion = em.merge(tarjetaIngresaEstacionCollection1NewTarjetaIngresaEstacion);
-                    if (oldEstacion1OfTarjetaIngresaEstacionCollection1NewTarjetaIngresaEstacion != null && !oldEstacion1OfTarjetaIngresaEstacionCollection1NewTarjetaIngresaEstacion.equals(estacion)) {
-                        oldEstacion1OfTarjetaIngresaEstacionCollection1NewTarjetaIngresaEstacion.getTarjetaIngresaEstacionCollection1().remove(tarjetaIngresaEstacionCollection1NewTarjetaIngresaEstacion);
-                        oldEstacion1OfTarjetaIngresaEstacionCollection1NewTarjetaIngresaEstacion = em.merge(oldEstacion1OfTarjetaIngresaEstacionCollection1NewTarjetaIngresaEstacion);
+            for (TarjetaIngresaEstacion tarjetaIngresaEstacionList1NewTarjetaIngresaEstacion : tarjetaIngresaEstacionList1New) {
+                if (!tarjetaIngresaEstacionList1Old.contains(tarjetaIngresaEstacionList1NewTarjetaIngresaEstacion)) {
+                    Estacion oldEstacion1OfTarjetaIngresaEstacionList1NewTarjetaIngresaEstacion = tarjetaIngresaEstacionList1NewTarjetaIngresaEstacion.getEstacion1();
+                    tarjetaIngresaEstacionList1NewTarjetaIngresaEstacion.setEstacion1(estacion);
+                    tarjetaIngresaEstacionList1NewTarjetaIngresaEstacion = em.merge(tarjetaIngresaEstacionList1NewTarjetaIngresaEstacion);
+                    if (oldEstacion1OfTarjetaIngresaEstacionList1NewTarjetaIngresaEstacion != null && !oldEstacion1OfTarjetaIngresaEstacionList1NewTarjetaIngresaEstacion.equals(estacion)) {
+                        oldEstacion1OfTarjetaIngresaEstacionList1NewTarjetaIngresaEstacion.getTarjetaIngresaEstacionList1().remove(tarjetaIngresaEstacionList1NewTarjetaIngresaEstacion);
+                        oldEstacion1OfTarjetaIngresaEstacionList1NewTarjetaIngresaEstacion = em.merge(oldEstacion1OfTarjetaIngresaEstacionList1NewTarjetaIngresaEstacion);
                     }
                 }
             }
-            for (Tarjeta tarjetaCollectionNewTarjeta : tarjetaCollectionNew) {
-                if (!tarjetaCollectionOld.contains(tarjetaCollectionNewTarjeta)) {
-                    Estacion oldNombreEstacionOfTarjetaCollectionNewTarjeta = tarjetaCollectionNewTarjeta.getNombreEstacion();
-                    tarjetaCollectionNewTarjeta.setNombreEstacion(estacion);
-                    tarjetaCollectionNewTarjeta = em.merge(tarjetaCollectionNewTarjeta);
-                    if (oldNombreEstacionOfTarjetaCollectionNewTarjeta != null && !oldNombreEstacionOfTarjetaCollectionNewTarjeta.equals(estacion)) {
-                        oldNombreEstacionOfTarjetaCollectionNewTarjeta.getTarjetaCollection().remove(tarjetaCollectionNewTarjeta);
-                        oldNombreEstacionOfTarjetaCollectionNewTarjeta = em.merge(oldNombreEstacionOfTarjetaCollectionNewTarjeta);
+            for (Tarjeta tarjetaListNewTarjeta : tarjetaListNew) {
+                if (!tarjetaListOld.contains(tarjetaListNewTarjeta)) {
+                    Estacion oldNombreEstacionOfTarjetaListNewTarjeta = tarjetaListNewTarjeta.getNombreEstacion();
+                    tarjetaListNewTarjeta.setNombreEstacion(estacion);
+                    tarjetaListNewTarjeta = em.merge(tarjetaListNewTarjeta);
+                    if (oldNombreEstacionOfTarjetaListNewTarjeta != null && !oldNombreEstacionOfTarjetaListNewTarjeta.equals(estacion)) {
+                        oldNombreEstacionOfTarjetaListNewTarjeta.getTarjetaList().remove(tarjetaListNewTarjeta);
+                        oldNombreEstacionOfTarjetaListNewTarjeta = em.merge(oldNombreEstacionOfTarjetaListNewTarjeta);
                     }
                 }
             }
-            for (Solicitud solicitudCollectionNewSolicitud : solicitudCollectionNew) {
-                if (!solicitudCollectionOld.contains(solicitudCollectionNewSolicitud)) {
-                    Estacion oldNombreEstacionOfSolicitudCollectionNewSolicitud = solicitudCollectionNewSolicitud.getNombreEstacion();
-                    solicitudCollectionNewSolicitud.setNombreEstacion(estacion);
-                    solicitudCollectionNewSolicitud = em.merge(solicitudCollectionNewSolicitud);
-                    if (oldNombreEstacionOfSolicitudCollectionNewSolicitud != null && !oldNombreEstacionOfSolicitudCollectionNewSolicitud.equals(estacion)) {
-                        oldNombreEstacionOfSolicitudCollectionNewSolicitud.getSolicitudCollection().remove(solicitudCollectionNewSolicitud);
-                        oldNombreEstacionOfSolicitudCollectionNewSolicitud = em.merge(oldNombreEstacionOfSolicitudCollectionNewSolicitud);
+            for (Solicitud solicitudListNewSolicitud : solicitudListNew) {
+                if (!solicitudListOld.contains(solicitudListNewSolicitud)) {
+                    Estacion oldNombreEstacionOfSolicitudListNewSolicitud = solicitudListNewSolicitud.getNombreEstacion();
+                    solicitudListNewSolicitud.setNombreEstacion(estacion);
+                    solicitudListNewSolicitud = em.merge(solicitudListNewSolicitud);
+                    if (oldNombreEstacionOfSolicitudListNewSolicitud != null && !oldNombreEstacionOfSolicitudListNewSolicitud.equals(estacion)) {
+                        oldNombreEstacionOfSolicitudListNewSolicitud.getSolicitudList().remove(solicitudListNewSolicitud);
+                        oldNombreEstacionOfSolicitudListNewSolicitud = em.merge(oldNombreEstacionOfSolicitudListNewSolicitud);
                     }
                 }
             }
@@ -340,46 +339,46 @@ public class EstacionJpaController implements Serializable {
                 throw new NonexistentEntityException("The estacion with id " + id + " no longer exists.", enfe);
             }
             List<String> illegalOrphanMessages = null;
-            Collection<TarjetaIngresaEstacion> tarjetaIngresaEstacionCollectionOrphanCheck = estacion.getTarjetaIngresaEstacionCollection();
-            for (TarjetaIngresaEstacion tarjetaIngresaEstacionCollectionOrphanCheckTarjetaIngresaEstacion : tarjetaIngresaEstacionCollectionOrphanCheck) {
+            List<TarjetaIngresaEstacion> tarjetaIngresaEstacionListOrphanCheck = estacion.getTarjetaIngresaEstacionList();
+            for (TarjetaIngresaEstacion tarjetaIngresaEstacionListOrphanCheckTarjetaIngresaEstacion : tarjetaIngresaEstacionListOrphanCheck) {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
-                illegalOrphanMessages.add("This Estacion (" + estacion + ") cannot be destroyed since the TarjetaIngresaEstacion " + tarjetaIngresaEstacionCollectionOrphanCheckTarjetaIngresaEstacion + " in its tarjetaIngresaEstacionCollection field has a non-nullable estacion field.");
+                illegalOrphanMessages.add("This Estacion (" + estacion + ") cannot be destroyed since the TarjetaIngresaEstacion " + tarjetaIngresaEstacionListOrphanCheckTarjetaIngresaEstacion + " in its tarjetaIngresaEstacionList field has a non-nullable estacion field.");
             }
-            Collection<TarjetaIngresaEstacion> tarjetaIngresaEstacionCollection1OrphanCheck = estacion.getTarjetaIngresaEstacionCollection1();
-            for (TarjetaIngresaEstacion tarjetaIngresaEstacionCollection1OrphanCheckTarjetaIngresaEstacion : tarjetaIngresaEstacionCollection1OrphanCheck) {
+            List<TarjetaIngresaEstacion> tarjetaIngresaEstacionList1OrphanCheck = estacion.getTarjetaIngresaEstacionList1();
+            for (TarjetaIngresaEstacion tarjetaIngresaEstacionList1OrphanCheckTarjetaIngresaEstacion : tarjetaIngresaEstacionList1OrphanCheck) {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
-                illegalOrphanMessages.add("This Estacion (" + estacion + ") cannot be destroyed since the TarjetaIngresaEstacion " + tarjetaIngresaEstacionCollection1OrphanCheckTarjetaIngresaEstacion + " in its tarjetaIngresaEstacionCollection1 field has a non-nullable estacion1 field.");
+                illegalOrphanMessages.add("This Estacion (" + estacion + ") cannot be destroyed since the TarjetaIngresaEstacion " + tarjetaIngresaEstacionList1OrphanCheckTarjetaIngresaEstacion + " in its tarjetaIngresaEstacionList1 field has a non-nullable estacion1 field.");
             }
-            Collection<Tarjeta> tarjetaCollectionOrphanCheck = estacion.getTarjetaCollection();
-            for (Tarjeta tarjetaCollectionOrphanCheckTarjeta : tarjetaCollectionOrphanCheck) {
+            List<Tarjeta> tarjetaListOrphanCheck = estacion.getTarjetaList();
+            for (Tarjeta tarjetaListOrphanCheckTarjeta : tarjetaListOrphanCheck) {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
-                illegalOrphanMessages.add("This Estacion (" + estacion + ") cannot be destroyed since the Tarjeta " + tarjetaCollectionOrphanCheckTarjeta + " in its tarjetaCollection field has a non-nullable nombreEstacion field.");
+                illegalOrphanMessages.add("This Estacion (" + estacion + ") cannot be destroyed since the Tarjeta " + tarjetaListOrphanCheckTarjeta + " in its tarjetaList field has a non-nullable nombreEstacion field.");
             }
-            Collection<Solicitud> solicitudCollectionOrphanCheck = estacion.getSolicitudCollection();
-            for (Solicitud solicitudCollectionOrphanCheckSolicitud : solicitudCollectionOrphanCheck) {
+            List<Solicitud> solicitudListOrphanCheck = estacion.getSolicitudList();
+            for (Solicitud solicitudListOrphanCheckSolicitud : solicitudListOrphanCheck) {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
-                illegalOrphanMessages.add("This Estacion (" + estacion + ") cannot be destroyed since the Solicitud " + solicitudCollectionOrphanCheckSolicitud + " in its solicitudCollection field has a non-nullable nombreEstacion field.");
+                illegalOrphanMessages.add("This Estacion (" + estacion + ") cannot be destroyed since the Solicitud " + solicitudListOrphanCheckSolicitud + " in its solicitudList field has a non-nullable nombreEstacion field.");
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
             Empleado idEmpleado = estacion.getIdEmpleado();
             if (idEmpleado != null) {
-                idEmpleado.getEstacionCollection().remove(estacion);
+                idEmpleado.getEstacionList().remove(estacion);
                 idEmpleado = em.merge(idEmpleado);
             }
-            Collection<Ruta> rutaCollection = estacion.getRutaCollection();
-            for (Ruta rutaCollectionRuta : rutaCollection) {
-                rutaCollectionRuta.getEstacionCollection().remove(estacion);
-                rutaCollectionRuta = em.merge(rutaCollectionRuta);
+            List<Ruta> rutaList = estacion.getRutaList();
+            for (Ruta rutaListRuta : rutaList) {
+                rutaListRuta.getEstacionList().remove(estacion);
+                rutaListRuta = em.merge(rutaListRuta);
             }
             em.remove(estacion);
             em.getTransaction().commit();

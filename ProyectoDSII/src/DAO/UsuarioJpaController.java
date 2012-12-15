@@ -16,14 +16,13 @@ import Logica.Tarjeta;
 import Logica.Solicitud;
 import Logica.Usuario;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author Dash
+ * @author Usuario
  */
 public class UsuarioJpaController implements Serializable {
 
@@ -37,8 +36,8 @@ public class UsuarioJpaController implements Serializable {
     }
 
     public void create(Usuario usuario) throws PreexistingEntityException, Exception {
-        if (usuario.getSolicitudCollection() == null) {
-            usuario.setSolicitudCollection(new ArrayList<Solicitud>());
+        if (usuario.getSolicitudList() == null) {
+            usuario.setSolicitudList(new ArrayList<Solicitud>());
         }
         EntityManager em = null;
         try {
@@ -49,24 +48,24 @@ public class UsuarioJpaController implements Serializable {
                 pinTarjeta = em.getReference(pinTarjeta.getClass(), pinTarjeta.getPin());
                 usuario.setPinTarjeta(pinTarjeta);
             }
-            Collection<Solicitud> attachedSolicitudCollection = new ArrayList<Solicitud>();
-            for (Solicitud solicitudCollectionSolicitudToAttach : usuario.getSolicitudCollection()) {
-                solicitudCollectionSolicitudToAttach = em.getReference(solicitudCollectionSolicitudToAttach.getClass(), solicitudCollectionSolicitudToAttach.getTicket());
-                attachedSolicitudCollection.add(solicitudCollectionSolicitudToAttach);
+            List<Solicitud> attachedSolicitudList = new ArrayList<Solicitud>();
+            for (Solicitud solicitudListSolicitudToAttach : usuario.getSolicitudList()) {
+                solicitudListSolicitudToAttach = em.getReference(solicitudListSolicitudToAttach.getClass(), solicitudListSolicitudToAttach.getTicket());
+                attachedSolicitudList.add(solicitudListSolicitudToAttach);
             }
-            usuario.setSolicitudCollection(attachedSolicitudCollection);
+            usuario.setSolicitudList(attachedSolicitudList);
             em.persist(usuario);
             if (pinTarjeta != null) {
-                pinTarjeta.getUsuarioCollection().add(usuario);
+                pinTarjeta.getUsuarioList().add(usuario);
                 pinTarjeta = em.merge(pinTarjeta);
             }
-            for (Solicitud solicitudCollectionSolicitud : usuario.getSolicitudCollection()) {
-                Usuario oldIdUsuarioOfSolicitudCollectionSolicitud = solicitudCollectionSolicitud.getIdUsuario();
-                solicitudCollectionSolicitud.setIdUsuario(usuario);
-                solicitudCollectionSolicitud = em.merge(solicitudCollectionSolicitud);
-                if (oldIdUsuarioOfSolicitudCollectionSolicitud != null) {
-                    oldIdUsuarioOfSolicitudCollectionSolicitud.getSolicitudCollection().remove(solicitudCollectionSolicitud);
-                    oldIdUsuarioOfSolicitudCollectionSolicitud = em.merge(oldIdUsuarioOfSolicitudCollectionSolicitud);
+            for (Solicitud solicitudListSolicitud : usuario.getSolicitudList()) {
+                Usuario oldIdUsuarioOfSolicitudListSolicitud = solicitudListSolicitud.getIdUsuario();
+                solicitudListSolicitud.setIdUsuario(usuario);
+                solicitudListSolicitud = em.merge(solicitudListSolicitud);
+                if (oldIdUsuarioOfSolicitudListSolicitud != null) {
+                    oldIdUsuarioOfSolicitudListSolicitud.getSolicitudList().remove(solicitudListSolicitud);
+                    oldIdUsuarioOfSolicitudListSolicitud = em.merge(oldIdUsuarioOfSolicitudListSolicitud);
                 }
             }
             em.getTransaction().commit();
@@ -90,15 +89,15 @@ public class UsuarioJpaController implements Serializable {
             Usuario persistentUsuario = em.find(Usuario.class, usuario.getIdUsuario());
             Tarjeta pinTarjetaOld = persistentUsuario.getPinTarjeta();
             Tarjeta pinTarjetaNew = usuario.getPinTarjeta();
-            Collection<Solicitud> solicitudCollectionOld = persistentUsuario.getSolicitudCollection();
-            Collection<Solicitud> solicitudCollectionNew = usuario.getSolicitudCollection();
+            List<Solicitud> solicitudListOld = persistentUsuario.getSolicitudList();
+            List<Solicitud> solicitudListNew = usuario.getSolicitudList();
             List<String> illegalOrphanMessages = null;
-            for (Solicitud solicitudCollectionOldSolicitud : solicitudCollectionOld) {
-                if (!solicitudCollectionNew.contains(solicitudCollectionOldSolicitud)) {
+            for (Solicitud solicitudListOldSolicitud : solicitudListOld) {
+                if (!solicitudListNew.contains(solicitudListOldSolicitud)) {
                     if (illegalOrphanMessages == null) {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
-                    illegalOrphanMessages.add("You must retain Solicitud " + solicitudCollectionOldSolicitud + " since its idUsuario field is not nullable.");
+                    illegalOrphanMessages.add("You must retain Solicitud " + solicitudListOldSolicitud + " since its idUsuario field is not nullable.");
                 }
             }
             if (illegalOrphanMessages != null) {
@@ -108,30 +107,30 @@ public class UsuarioJpaController implements Serializable {
                 pinTarjetaNew = em.getReference(pinTarjetaNew.getClass(), pinTarjetaNew.getPin());
                 usuario.setPinTarjeta(pinTarjetaNew);
             }
-            Collection<Solicitud> attachedSolicitudCollectionNew = new ArrayList<Solicitud>();
-            for (Solicitud solicitudCollectionNewSolicitudToAttach : solicitudCollectionNew) {
-                solicitudCollectionNewSolicitudToAttach = em.getReference(solicitudCollectionNewSolicitudToAttach.getClass(), solicitudCollectionNewSolicitudToAttach.getTicket());
-                attachedSolicitudCollectionNew.add(solicitudCollectionNewSolicitudToAttach);
+            List<Solicitud> attachedSolicitudListNew = new ArrayList<Solicitud>();
+            for (Solicitud solicitudListNewSolicitudToAttach : solicitudListNew) {
+                solicitudListNewSolicitudToAttach = em.getReference(solicitudListNewSolicitudToAttach.getClass(), solicitudListNewSolicitudToAttach.getTicket());
+                attachedSolicitudListNew.add(solicitudListNewSolicitudToAttach);
             }
-            solicitudCollectionNew = attachedSolicitudCollectionNew;
-            usuario.setSolicitudCollection(solicitudCollectionNew);
+            solicitudListNew = attachedSolicitudListNew;
+            usuario.setSolicitudList(solicitudListNew);
             usuario = em.merge(usuario);
             if (pinTarjetaOld != null && !pinTarjetaOld.equals(pinTarjetaNew)) {
-                pinTarjetaOld.getUsuarioCollection().remove(usuario);
+                pinTarjetaOld.getUsuarioList().remove(usuario);
                 pinTarjetaOld = em.merge(pinTarjetaOld);
             }
             if (pinTarjetaNew != null && !pinTarjetaNew.equals(pinTarjetaOld)) {
-                pinTarjetaNew.getUsuarioCollection().add(usuario);
+                pinTarjetaNew.getUsuarioList().add(usuario);
                 pinTarjetaNew = em.merge(pinTarjetaNew);
             }
-            for (Solicitud solicitudCollectionNewSolicitud : solicitudCollectionNew) {
-                if (!solicitudCollectionOld.contains(solicitudCollectionNewSolicitud)) {
-                    Usuario oldIdUsuarioOfSolicitudCollectionNewSolicitud = solicitudCollectionNewSolicitud.getIdUsuario();
-                    solicitudCollectionNewSolicitud.setIdUsuario(usuario);
-                    solicitudCollectionNewSolicitud = em.merge(solicitudCollectionNewSolicitud);
-                    if (oldIdUsuarioOfSolicitudCollectionNewSolicitud != null && !oldIdUsuarioOfSolicitudCollectionNewSolicitud.equals(usuario)) {
-                        oldIdUsuarioOfSolicitudCollectionNewSolicitud.getSolicitudCollection().remove(solicitudCollectionNewSolicitud);
-                        oldIdUsuarioOfSolicitudCollectionNewSolicitud = em.merge(oldIdUsuarioOfSolicitudCollectionNewSolicitud);
+            for (Solicitud solicitudListNewSolicitud : solicitudListNew) {
+                if (!solicitudListOld.contains(solicitudListNewSolicitud)) {
+                    Usuario oldIdUsuarioOfSolicitudListNewSolicitud = solicitudListNewSolicitud.getIdUsuario();
+                    solicitudListNewSolicitud.setIdUsuario(usuario);
+                    solicitudListNewSolicitud = em.merge(solicitudListNewSolicitud);
+                    if (oldIdUsuarioOfSolicitudListNewSolicitud != null && !oldIdUsuarioOfSolicitudListNewSolicitud.equals(usuario)) {
+                        oldIdUsuarioOfSolicitudListNewSolicitud.getSolicitudList().remove(solicitudListNewSolicitud);
+                        oldIdUsuarioOfSolicitudListNewSolicitud = em.merge(oldIdUsuarioOfSolicitudListNewSolicitud);
                     }
                 }
             }
@@ -139,7 +138,7 @@ public class UsuarioJpaController implements Serializable {
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                Integer id = usuario.getIdUsuario();
+                String id = usuario.getIdUsuario();
                 if (findUsuario(id) == null) {
                     throw new NonexistentEntityException("The usuario with id " + id + " no longer exists.");
                 }
@@ -152,7 +151,7 @@ public class UsuarioJpaController implements Serializable {
         }
     }
 
-    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
+    public void destroy(String id) throws IllegalOrphanException, NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -165,19 +164,19 @@ public class UsuarioJpaController implements Serializable {
                 throw new NonexistentEntityException("The usuario with id " + id + " no longer exists.", enfe);
             }
             List<String> illegalOrphanMessages = null;
-            Collection<Solicitud> solicitudCollectionOrphanCheck = usuario.getSolicitudCollection();
-            for (Solicitud solicitudCollectionOrphanCheckSolicitud : solicitudCollectionOrphanCheck) {
+            List<Solicitud> solicitudListOrphanCheck = usuario.getSolicitudList();
+            for (Solicitud solicitudListOrphanCheckSolicitud : solicitudListOrphanCheck) {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
-                illegalOrphanMessages.add("This Usuario (" + usuario + ") cannot be destroyed since the Solicitud " + solicitudCollectionOrphanCheckSolicitud + " in its solicitudCollection field has a non-nullable idUsuario field.");
+                illegalOrphanMessages.add("This Usuario (" + usuario + ") cannot be destroyed since the Solicitud " + solicitudListOrphanCheckSolicitud + " in its solicitudList field has a non-nullable idUsuario field.");
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
             Tarjeta pinTarjeta = usuario.getPinTarjeta();
             if (pinTarjeta != null) {
-                pinTarjeta.getUsuarioCollection().remove(usuario);
+                pinTarjeta.getUsuarioList().remove(usuario);
                 pinTarjeta = em.merge(pinTarjeta);
             }
             em.remove(usuario);
@@ -213,7 +212,7 @@ public class UsuarioJpaController implements Serializable {
         }
     }
 
-    public Usuario findUsuario(Integer id) {
+    public Usuario findUsuario(String id) {
         EntityManager em = getEntityManager();
         try {
             return em.find(Usuario.class, id);

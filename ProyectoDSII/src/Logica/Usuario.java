@@ -5,7 +5,7 @@
 package Logica;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Dash
+ * @author Usuario
  */
 @Entity
 @Table(name = "usuario")
@@ -39,7 +39,7 @@ public class Usuario implements Serializable {
     @Id
     @Basic(optional = false)
     @Column(name = "id_usuario")
-    private Integer idUsuario;
+    private String idUsuario;
     @Basic(optional = false)
     @Column(name = "nombre")
     private String nombre;
@@ -56,16 +56,16 @@ public class Usuario implements Serializable {
     @ManyToOne(optional = false)
     private Tarjeta pinTarjeta;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario")
-    private Collection<Solicitud> solicitudCollection;
+    private List<Solicitud> solicitudList;
 
     public Usuario() {
     }
 
-    public Usuario(Integer idUsuario) {
+    public Usuario(String idUsuario) {
         this.idUsuario = idUsuario;
     }
 
-    public Usuario(Integer idUsuario, String nombre, String ciudad, String direccion, String telefono) {
+    public Usuario(String idUsuario, String nombre, String ciudad, String direccion, String telefono) {
         this.idUsuario = idUsuario;
         this.nombre = nombre;
         this.ciudad = ciudad;
@@ -73,11 +73,11 @@ public class Usuario implements Serializable {
         this.telefono = telefono;
     }
 
-    public Integer getIdUsuario() {
+    public String getIdUsuario() {
         return idUsuario;
     }
 
-    public void setIdUsuario(Integer idUsuario) {
+    public void setIdUsuario(String idUsuario) {
         this.idUsuario = idUsuario;
     }
 
@@ -122,12 +122,12 @@ public class Usuario implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Solicitud> getSolicitudCollection() {
-        return solicitudCollection;
+    public List<Solicitud> getSolicitudList() {
+        return solicitudList;
     }
 
-    public void setSolicitudCollection(Collection<Solicitud> solicitudCollection) {
-        this.solicitudCollection = solicitudCollection;
+    public void setSolicitudList(List<Solicitud> solicitudList) {
+        this.solicitudList = solicitudList;
     }
 
     @Override

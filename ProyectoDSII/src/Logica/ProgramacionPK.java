@@ -11,7 +11,7 @@ import javax.persistence.Embeddable;
 
 /**
  *
- * @author Dash
+ * @author Usuario
  */
 @Embeddable
 public class ProgramacionPK implements Serializable {

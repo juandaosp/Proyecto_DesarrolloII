@@ -21,7 +21,7 @@ import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author Dash
+ * @author Usuario
  */
 public class TarjetaIngresaEstacionJpaController implements Serializable {
 
@@ -62,15 +62,15 @@ public class TarjetaIngresaEstacionJpaController implements Serializable {
             }
             em.persist(tarjetaIngresaEstacion);
             if (tarjeta != null) {
-                tarjeta.getTarjetaIngresaEstacionCollection().add(tarjetaIngresaEstacion);
+                tarjeta.getTarjetaIngresaEstacionList().add(tarjetaIngresaEstacion);
                 tarjeta = em.merge(tarjeta);
             }
             if (estacion != null) {
-                estacion.getTarjetaIngresaEstacionCollection().add(tarjetaIngresaEstacion);
+                estacion.getTarjetaIngresaEstacionList().add(tarjetaIngresaEstacion);
                 estacion = em.merge(estacion);
             }
             if (estacion1 != null) {
-                estacion1.getTarjetaIngresaEstacionCollection().add(tarjetaIngresaEstacion);
+                estacion1.getTarjetaIngresaEstacionList().add(tarjetaIngresaEstacion);
                 estacion1 = em.merge(estacion1);
             }
             em.getTransaction().commit();
@@ -115,27 +115,27 @@ public class TarjetaIngresaEstacionJpaController implements Serializable {
             }
             tarjetaIngresaEstacion = em.merge(tarjetaIngresaEstacion);
             if (tarjetaOld != null && !tarjetaOld.equals(tarjetaNew)) {
-                tarjetaOld.getTarjetaIngresaEstacionCollection().remove(tarjetaIngresaEstacion);
+                tarjetaOld.getTarjetaIngresaEstacionList().remove(tarjetaIngresaEstacion);
                 tarjetaOld = em.merge(tarjetaOld);
             }
             if (tarjetaNew != null && !tarjetaNew.equals(tarjetaOld)) {
-                tarjetaNew.getTarjetaIngresaEstacionCollection().add(tarjetaIngresaEstacion);
+                tarjetaNew.getTarjetaIngresaEstacionList().add(tarjetaIngresaEstacion);
                 tarjetaNew = em.merge(tarjetaNew);
             }
             if (estacionOld != null && !estacionOld.equals(estacionNew)) {
-                estacionOld.getTarjetaIngresaEstacionCollection().remove(tarjetaIngresaEstacion);
+                estacionOld.getTarjetaIngresaEstacionList().remove(tarjetaIngresaEstacion);
                 estacionOld = em.merge(estacionOld);
             }
             if (estacionNew != null && !estacionNew.equals(estacionOld)) {
-                estacionNew.getTarjetaIngresaEstacionCollection().add(tarjetaIngresaEstacion);
+                estacionNew.getTarjetaIngresaEstacionList().add(tarjetaIngresaEstacion);
                 estacionNew = em.merge(estacionNew);
             }
             if (estacion1Old != null && !estacion1Old.equals(estacion1New)) {
-                estacion1Old.getTarjetaIngresaEstacionCollection().remove(tarjetaIngresaEstacion);
+                estacion1Old.getTarjetaIngresaEstacionList().remove(tarjetaIngresaEstacion);
                 estacion1Old = em.merge(estacion1Old);
             }
             if (estacion1New != null && !estacion1New.equals(estacion1Old)) {
-                estacion1New.getTarjetaIngresaEstacionCollection().add(tarjetaIngresaEstacion);
+                estacion1New.getTarjetaIngresaEstacionList().add(tarjetaIngresaEstacion);
                 estacion1New = em.merge(estacion1New);
             }
             em.getTransaction().commit();
@@ -169,17 +169,17 @@ public class TarjetaIngresaEstacionJpaController implements Serializable {
             }
             Tarjeta tarjeta = tarjetaIngresaEstacion.getTarjeta();
             if (tarjeta != null) {
-                tarjeta.getTarjetaIngresaEstacionCollection().remove(tarjetaIngresaEstacion);
+                tarjeta.getTarjetaIngresaEstacionList().remove(tarjetaIngresaEstacion);
                 tarjeta = em.merge(tarjeta);
             }
             Estacion estacion = tarjetaIngresaEstacion.getEstacion();
             if (estacion != null) {
-                estacion.getTarjetaIngresaEstacionCollection().remove(tarjetaIngresaEstacion);
+                estacion.getTarjetaIngresaEstacionList().remove(tarjetaIngresaEstacion);
                 estacion = em.merge(estacion);
             }
             Estacion estacion1 = tarjetaIngresaEstacion.getEstacion1();
             if (estacion1 != null) {
-                estacion1.getTarjetaIngresaEstacionCollection().remove(tarjetaIngresaEstacion);
+                estacion1.getTarjetaIngresaEstacionList().remove(tarjetaIngresaEstacion);
                 estacion1 = em.merge(estacion1);
             }
             em.remove(tarjetaIngresaEstacion);

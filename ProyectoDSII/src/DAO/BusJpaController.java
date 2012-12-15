@@ -15,14 +15,13 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import Logica.Programacion;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author Dash
+ * @author Usuario
  */
 public class BusJpaController implements Serializable {
 
@@ -36,27 +35,27 @@ public class BusJpaController implements Serializable {
     }
 
     public void create(Bus bus) throws PreexistingEntityException, Exception {
-        if (bus.getProgramacionCollection() == null) {
-            bus.setProgramacionCollection(new ArrayList<Programacion>());
+        if (bus.getProgramacionList() == null) {
+            bus.setProgramacionList(new ArrayList<Programacion>());
         }
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Collection<Programacion> attachedProgramacionCollection = new ArrayList<Programacion>();
-            for (Programacion programacionCollectionProgramacionToAttach : bus.getProgramacionCollection()) {
-                programacionCollectionProgramacionToAttach = em.getReference(programacionCollectionProgramacionToAttach.getClass(), programacionCollectionProgramacionToAttach.getProgramacionPK());
-                attachedProgramacionCollection.add(programacionCollectionProgramacionToAttach);
+            List<Programacion> attachedProgramacionList = new ArrayList<Programacion>();
+            for (Programacion programacionListProgramacionToAttach : bus.getProgramacionList()) {
+                programacionListProgramacionToAttach = em.getReference(programacionListProgramacionToAttach.getClass(), programacionListProgramacionToAttach.getProgramacionPK());
+                attachedProgramacionList.add(programacionListProgramacionToAttach);
             }
-            bus.setProgramacionCollection(attachedProgramacionCollection);
+            bus.setProgramacionList(attachedProgramacionList);
             em.persist(bus);
-            for (Programacion programacionCollectionProgramacion : bus.getProgramacionCollection()) {
-                Bus oldBusOfProgramacionCollectionProgramacion = programacionCollectionProgramacion.getBus();
-                programacionCollectionProgramacion.setBus(bus);
-                programacionCollectionProgramacion = em.merge(programacionCollectionProgramacion);
-                if (oldBusOfProgramacionCollectionProgramacion != null) {
-                    oldBusOfProgramacionCollectionProgramacion.getProgramacionCollection().remove(programacionCollectionProgramacion);
-                    oldBusOfProgramacionCollectionProgramacion = em.merge(oldBusOfProgramacionCollectionProgramacion);
+            for (Programacion programacionListProgramacion : bus.getProgramacionList()) {
+                Bus oldBusOfProgramacionListProgramacion = programacionListProgramacion.getBus();
+                programacionListProgramacion.setBus(bus);
+                programacionListProgramacion = em.merge(programacionListProgramacion);
+                if (oldBusOfProgramacionListProgramacion != null) {
+                    oldBusOfProgramacionListProgramacion.getProgramacionList().remove(programacionListProgramacion);
+                    oldBusOfProgramacionListProgramacion = em.merge(oldBusOfProgramacionListProgramacion);
                 }
             }
             em.getTransaction().commit();
@@ -78,36 +77,36 @@ public class BusJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Bus persistentBus = em.find(Bus.class, bus.getMatricula());
-            Collection<Programacion> programacionCollectionOld = persistentBus.getProgramacionCollection();
-            Collection<Programacion> programacionCollectionNew = bus.getProgramacionCollection();
+            List<Programacion> programacionListOld = persistentBus.getProgramacionList();
+            List<Programacion> programacionListNew = bus.getProgramacionList();
             List<String> illegalOrphanMessages = null;
-            for (Programacion programacionCollectionOldProgramacion : programacionCollectionOld) {
-                if (!programacionCollectionNew.contains(programacionCollectionOldProgramacion)) {
+            for (Programacion programacionListOldProgramacion : programacionListOld) {
+                if (!programacionListNew.contains(programacionListOldProgramacion)) {
                     if (illegalOrphanMessages == null) {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
-                    illegalOrphanMessages.add("You must retain Programacion " + programacionCollectionOldProgramacion + " since its bus field is not nullable.");
+                    illegalOrphanMessages.add("You must retain Programacion " + programacionListOldProgramacion + " since its bus field is not nullable.");
                 }
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            Collection<Programacion> attachedProgramacionCollectionNew = new ArrayList<Programacion>();
-            for (Programacion programacionCollectionNewProgramacionToAttach : programacionCollectionNew) {
-                programacionCollectionNewProgramacionToAttach = em.getReference(programacionCollectionNewProgramacionToAttach.getClass(), programacionCollectionNewProgramacionToAttach.getProgramacionPK());
-                attachedProgramacionCollectionNew.add(programacionCollectionNewProgramacionToAttach);
+            List<Programacion> attachedProgramacionListNew = new ArrayList<Programacion>();
+            for (Programacion programacionListNewProgramacionToAttach : programacionListNew) {
+                programacionListNewProgramacionToAttach = em.getReference(programacionListNewProgramacionToAttach.getClass(), programacionListNewProgramacionToAttach.getProgramacionPK());
+                attachedProgramacionListNew.add(programacionListNewProgramacionToAttach);
             }
-            programacionCollectionNew = attachedProgramacionCollectionNew;
-            bus.setProgramacionCollection(programacionCollectionNew);
+            programacionListNew = attachedProgramacionListNew;
+            bus.setProgramacionList(programacionListNew);
             bus = em.merge(bus);
-            for (Programacion programacionCollectionNewProgramacion : programacionCollectionNew) {
-                if (!programacionCollectionOld.contains(programacionCollectionNewProgramacion)) {
-                    Bus oldBusOfProgramacionCollectionNewProgramacion = programacionCollectionNewProgramacion.getBus();
-                    programacionCollectionNewProgramacion.setBus(bus);
-                    programacionCollectionNewProgramacion = em.merge(programacionCollectionNewProgramacion);
-                    if (oldBusOfProgramacionCollectionNewProgramacion != null && !oldBusOfProgramacionCollectionNewProgramacion.equals(bus)) {
-                        oldBusOfProgramacionCollectionNewProgramacion.getProgramacionCollection().remove(programacionCollectionNewProgramacion);
-                        oldBusOfProgramacionCollectionNewProgramacion = em.merge(oldBusOfProgramacionCollectionNewProgramacion);
+            for (Programacion programacionListNewProgramacion : programacionListNew) {
+                if (!programacionListOld.contains(programacionListNewProgramacion)) {
+                    Bus oldBusOfProgramacionListNewProgramacion = programacionListNewProgramacion.getBus();
+                    programacionListNewProgramacion.setBus(bus);
+                    programacionListNewProgramacion = em.merge(programacionListNewProgramacion);
+                    if (oldBusOfProgramacionListNewProgramacion != null && !oldBusOfProgramacionListNewProgramacion.equals(bus)) {
+                        oldBusOfProgramacionListNewProgramacion.getProgramacionList().remove(programacionListNewProgramacion);
+                        oldBusOfProgramacionListNewProgramacion = em.merge(oldBusOfProgramacionListNewProgramacion);
                     }
                 }
             }
@@ -141,12 +140,12 @@ public class BusJpaController implements Serializable {
                 throw new NonexistentEntityException("The bus with id " + id + " no longer exists.", enfe);
             }
             List<String> illegalOrphanMessages = null;
-            Collection<Programacion> programacionCollectionOrphanCheck = bus.getProgramacionCollection();
-            for (Programacion programacionCollectionOrphanCheckProgramacion : programacionCollectionOrphanCheck) {
+            List<Programacion> programacionListOrphanCheck = bus.getProgramacionList();
+            for (Programacion programacionListOrphanCheckProgramacion : programacionListOrphanCheck) {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
-                illegalOrphanMessages.add("This Bus (" + bus + ") cannot be destroyed since the Programacion " + programacionCollectionOrphanCheckProgramacion + " in its programacionCollection field has a non-nullable bus field.");
+                illegalOrphanMessages.add("This Bus (" + bus + ") cannot be destroyed since the Programacion " + programacionListOrphanCheckProgramacion + " in its programacionList field has a non-nullable bus field.");
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
