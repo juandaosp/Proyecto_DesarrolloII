@@ -7,6 +7,7 @@ package Controladores;
 import DAO.TarjetaIngresaEstacionJpaController;
 import DAO.TarjetaJpaController;
 import Logica.Tarjeta;
+import java.util.Date;
 import java.util.Iterator;
 import javax.persistence.EntityManager;
 
@@ -42,9 +43,48 @@ public class ControladorTarjeta
         }
     }
     
-    public void insertarTarjeta(int costo,String estado,Date fecha){
+    public void insertarTarjeta(int costo,String estado,Date fecha,int pin,String tipo)
+    {
      
+        Tarjeta tarjeta = new Tarjeta(tipo, costo, tipo, estado, pin, fecha);        
         
-    }    
+        try 
+        {
+            DaoTarjeta.create(tarjeta);
+        } 
+        catch (Exception e)
+        {
+        
+        }
+    }
+    
+    public void eliminarTarjeta(String pin)
+    {
+        Tarjeta tarjeta = (Tarjeta)DaoTarjeta.findTarjeta(pin);
+        
+        try 
+        {
+            DaoTarjeta.destroy(tarjeta.getPin());
+        } 
+        catch (Exception e) 
+        {
+        
+        }       
+    }
+    
+    public void modificarTarjeta(String pin,int costo,String estado,Date fecha,String tipo)
+    {
+        Tarjeta tarjeta= DaoTarjeta.findTarjeta(pin);
+        
+        tarjeta.setEstado(estado);
+        tarjeta.setCosto(costo);
+        tarjeta.setFecha(fecha);
+        tarjeta.setTipo(tipo); 
+    
+        try {
+            DaoTarjeta.edit(tarjeta);
+        } catch (Exception e) {
+        }
+    }
     
 }
