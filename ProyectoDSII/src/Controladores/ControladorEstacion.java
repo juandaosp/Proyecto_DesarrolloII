@@ -61,24 +61,24 @@ public class ControladorEstacion {
     
     public void agregarEstacion(String nombreEstacion, String ubicacion, String estado, String idEmpleado) throws PreexistingEntityException, Exception
     {
-    Empleado emp = new Empleado();
-    emp = DaoEmpleado.findEmpleado(idEmpleado);
-    Estacion myEstacion = new Estacion();
-    myEstacion.setNombreEstacion(nombreEstacion);
-    myEstacion.setUbicacion(ubicacion);
-    myEstacion.setEstado(estado);
-    myEstacion.setIdEmpleado(emp);
-    
-    DaoEstacion.create(myEstacion);
+        Empleado emp = new Empleado();
+        emp = DaoEmpleado.findEmpleado(idEmpleado);
+        
+        Estacion myEstacion = new Estacion();
+        myEstacion.setNombreEstacion(nombreEstacion);
+        myEstacion.setUbicacion(ubicacion);
+        myEstacion.setEstado(estado);
+        myEstacion.setIdEmpleado(emp);
+
+        DaoEstacion.create(myEstacion);
     }
     
-    public void editarEstacion(String nombre)
+    public void editarEstacion(String nombre,String idEmpleado,String estado)
     {
         Estacion estacionEncontrada = DaoEstacion.findEstacion(nombre);
-        Empleado e = new Empleado();
-        e.setId("123");
-        estacionEncontrada.setUbicacion("call algo");
-        estacionEncontrada.setEstado("Activo");
+        Empleado e = DaoEmpleado.findEmpleado(idEmpleado);        
+        
+        estacionEncontrada.setEstado(estado);
         estacionEncontrada.setIdEmpleado(e);
         
         

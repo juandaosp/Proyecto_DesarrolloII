@@ -6,7 +6,11 @@ package Controladores;
 
 import DAO.TarjetaIngresaEstacionJpaController;
 import DAO.TarjetaJpaController;
+import Logica.Estacion;
 import Logica.Tarjeta;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import javax.persistence.EntityManager;
@@ -43,10 +47,13 @@ public class ControladorTarjeta
         }
     }
     
-    public void insertarTarjeta(int costo,String estado,Date fecha,int pin,String tipo)
+    public void insertarTarjeta(int costo,String estado,String fecha,int pin,String tipo,Estacion estacion)
     {
      
-        Tarjeta tarjeta = new Tarjeta(tipo, costo, tipo, estado, pin, fecha);        
+        Date fecha_con_formato = getDate(fecha);
+        Tarjeta tarjeta = new Tarjeta(tipo, costo, tipo, estado, pin, fecha_con_formato);       
+        
+        tarjeta.setNombreEstacion(estacion);
         
         try 
         {
@@ -72,19 +79,39 @@ public class ControladorTarjeta
         }       
     }
     
-    public void modificarTarjeta(String pin,int costo,String estado,Date fecha,String tipo)
+    public void modificarTarjeta(String pin,int costo,String estado,String fecha,String tipo)
     {
         Tarjeta tarjeta= DaoTarjeta.findTarjeta(pin);
+        Date fecha_con_formato = getDate(fecha);
         
         tarjeta.setEstado(estado);
         tarjeta.setCosto(costo);
-        tarjeta.setFecha(fecha);
+        tarjeta.setFecha(fecha_con_formato);
         tarjeta.setTipo(tipo); 
     
         try {
             DaoTarjeta.edit(tarjeta);
         } catch (Exception e) {
         }
+    }
+    
+     public Date getDate(String date)
+    {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+
+        try 
+        {
+
+            return df.parse(date);
+
+        } 
+        catch (ParseException ex) 
+        {
+
+        }
+
+        return null;
+
     }
     
 }
