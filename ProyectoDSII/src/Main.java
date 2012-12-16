@@ -1,5 +1,5 @@
 
-import GUI.LoginPrincipal;
+import GUI.login;
 
 /*
  * To change this template, choose Tools | Templates
@@ -17,7 +17,7 @@ public class Main {
      */
     public static void main(String[] args) {
         
-        LoginPrincipal l = new LoginPrincipal();
+        login l = new login();
         // TODO code application logic here
     }
 }

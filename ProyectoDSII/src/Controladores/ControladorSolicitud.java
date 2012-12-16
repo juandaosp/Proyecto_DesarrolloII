@@ -88,17 +88,17 @@ public class ControladorSolicitud
         
     }
     
-    public void modificarSolicitud(String ticket)
+    public void modificarSolicitud(String ticket,String descripcion,String motivo,String hora,String fecha,String estado,String idUsuario,String nombreEstacion)
     {
         Solicitud solicitud_encontrada = DaoSolicitud.findSolicitud(ticket); 
-        Usuario usuario= DaoUsuario.findUsuario("001");
-        Estacion estacion=DaoEstacion.findEstacion("Pampalinda") ;
+        Usuario usuario= DaoUsuario.findUsuario(idUsuario);
+        Estacion estacion=DaoEstacion.findEstacion(nombreEstacion) ;
         
-        solicitud_encontrada.setDescripcion("");
-        solicitud_encontrada.setMotivo("");
-        solicitud_encontrada.setHora("");
-        solicitud_encontrada.setFecha(this.getDate("1999-02-03"));
-        solicitud_encontrada.setEstado("");
+        solicitud_encontrada.setDescripcion(descripcion);
+        solicitud_encontrada.setMotivo(motivo);
+        solicitud_encontrada.setHora(hora);
+        solicitud_encontrada.setFecha(this.getDate(fecha));
+        solicitud_encontrada.setEstado(estado);
         solicitud_encontrada.setIdUsuario(usuario);
         solicitud_encontrada.setNombreEstacion(estacion);
         

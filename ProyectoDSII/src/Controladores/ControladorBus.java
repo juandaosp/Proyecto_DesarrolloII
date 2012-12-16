@@ -56,30 +56,30 @@ public class ControladorBus {
     
     public void agregarBus(String matricula, String estado, String ano, String fabricante, String capacidad, String cilindrinaje, String chasis, String tipoBus ) throws PreexistingEntityException, Exception
     {
-    Bus mybus = new Bus();
-    mybus.setMatricula(matricula);
-    mybus.setEstado(estado);
-    mybus.setAno(ano);
-    mybus.setFabricante(fabricante);
-    mybus.setCapacidad(capacidad);
-    mybus.setCilindrinaje(cilindrinaje);
-    mybus.setChasis(chasis);
-    mybus.setTipoBus(tipoBus);
-    
-    DaoBus.create(mybus);
+        Bus mybus = new Bus();
+        mybus.setMatricula(matricula);
+        mybus.setEstado(estado);
+        mybus.setAno(ano);
+        mybus.setFabricante(fabricante);
+        mybus.setCapacidad(capacidad);
+        mybus.setCilindrinaje(cilindrinaje);
+        mybus.setChasis(chasis);
+        mybus.setTipoBus(tipoBus);
+
+        DaoBus.create(mybus);
     }
     
-    public void editarBus(String matricula)
+    public void editarBus(String matricula,String estado,String ano,String fabricante,String capacidad,String cilindraje,String chasis,String tipo)
     {
         Bus busEncontrado = DaoBus.findBus(matricula);
         
-        busEncontrado.setEstado("Activo");
-        busEncontrado.setAno("1998");
-        busEncontrado.setFabricante("Toyota");
-        busEncontrado.setCapacidad("180");
-        busEncontrado.setCilindrinaje("180");
-        busEncontrado.setChasis("123234");
-        busEncontrado.setTipoBus("Articulado");
+        busEncontrado.setEstado(estado);
+        busEncontrado.setAno(ano);
+        busEncontrado.setFabricante(fabricante);
+        busEncontrado.setCapacidad(capacidad);
+        busEncontrado.setCilindrinaje(cilindraje);
+        busEncontrado.setChasis(chasis);
+        busEncontrado.setTipoBus(tipo);
         
         try 
         {   
@@ -102,12 +102,5 @@ public class ControladorBus {
     }
     
     
-    public static void main (String atgs[]) throws PreexistingEntityException, Exception
-    {
-    ControladorBus con = new ControladorBus();
-    ///.agregarBus("ryfvgujh456789", "sadad", "sadasd", "fdfd", "fgdfg", "saddfgdf", "dsfsdfsd", "sfsdfsd");
-    con.consultarBus("123");
-    ///con.editarBus("abc");
-    ///con.eliminarBus("abc");
-    }
+    
 }
